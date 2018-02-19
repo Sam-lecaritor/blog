@@ -1,5 +1,6 @@
 {
     "require": {
-        "kint-php/kint": "^2.2"
+        "kint-php/kint": "^2.2",
+        "twig/twig": "~2.0"
     }
 }

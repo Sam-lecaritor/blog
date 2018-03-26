@@ -1,0 +1,15 @@
+{% include 'header.twig' %}
+{% include 'navbar.twig' %}
+{# {% include 'sidenav.twig' %} #}
+
+moteur de templates {{moteur_name}}
+
+
+        <ul id="navigation">
+        {% for item in articles %}
+            <li>{{ item.title }} id : {{ item.id }}</a></li>
+        {% endfor %}
+        </ul>
+
+{# {% include 'loginform.twig' %} #}
+{% include 'footer.twig' %}

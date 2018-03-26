@@ -7,7 +7,11 @@ moteur de templates {{moteur_name}}
 
         <ul id="navigation">
         {% for item in articles %}
-            <li>{{ item.title }} id : {{ item.id }}</a></li>
+            <li>
+            {{ item.title }} id : {{ item.id }}
+            <a href="chapitre/{{ item.slug }}">test url</a>
+            </li>
+
         {% endfor %}
         </ul>
 

@@ -5,15 +5,16 @@ require 'app/bootstrap.php';
 
 if(isset($_GET['url'])){
 
+    $urlarray = explode('/', $_GET['url']);
     d($_GET['url']);
-    $url=$_GET['url'];
+    d($urlarray);
+ 
 }else{
 
-    $url='home';
+    $urlarray='home';
 }
 
-//ob_start();
-    switch ($url) {
+    switch ($urlarray[0]) {
         case 'Home':
 
             $articles= new Controllers\Articles_controller($twig);

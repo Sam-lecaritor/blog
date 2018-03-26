@@ -1,5 +1,5 @@
 <?php
-
+namespace App;
  require_once 'config/bdd.php'; 
 
 class Db_connect{
@@ -28,7 +28,7 @@ public function connect(){
     if($this->pdo === null){
         try
         {
-            $this->pdo=$dbh = new PDO("mysql:host=$this->host;dbname=$this->db_name", $this->db_user, $this->db_pass);
+            $this->pdo=$dbh = new \PDO("mysql:host=$this->host;dbname=$this->db_name", $this->db_user, $this->db_pass);
         }
         catch(Exception $e)
         {

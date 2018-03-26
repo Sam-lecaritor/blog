@@ -1,11 +1,12 @@
 <?php
 
 require 'app/bootstrap.php';
-$db= new Db_connect();
-$db->connect();
+
+$db= new App\Db_connect();
 $db->connect();
 
-if(isset($_GET)){
+
+if(isset($_GET['url'])){
 
     d($_GET['url']);
     $url=$_GET['url'];
@@ -14,10 +15,11 @@ if(isset($_GET)){
     $url='home';
 }
 
-ob_start();
+//ob_start();
     switch ($url) {
-        case 'home':
+        case 'login':
             echo "i égal 0";
+            //require du login controller
             break;
         case 'home2':
             echo "i égal 1";
@@ -26,10 +28,19 @@ ob_start();
             echo "i égal 2";
             break;
             default:
+            echo "i égal default";
+
+/*   echo $twig->render('index.twig', array(
+        'moteur_name' => 'Twig'
+    )); */
 
     }
 
-$content = ob_get_clean();
+//$content = ob_get_clean();
+
+    echo $twig->render('index.twig', array(
+        'moteur_name' => 'Twig'
+    ));
 
 
-require "views/template/default.php";
+//require "views/template/default.php";

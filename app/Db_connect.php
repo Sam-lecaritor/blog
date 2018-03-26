@@ -35,7 +35,6 @@ public function connect(){
             die('Erreur : '.$e->getMessage());
         }
 
-    echo 'conneccttttttttttttttttt';
     }
     return $this->pdo;
 }

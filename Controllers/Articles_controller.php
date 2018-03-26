@@ -30,4 +30,19 @@ $listeArticles = $this->article_model->getListeArticles();
 
 }
 
+
+public function afficherArticle($slug){
+
+$article = $this->article_model->getArticle($slug);
+d($article);
+    echo $this->template->render('SingleArticles.twig', array(
+        'moteur_name' => 'Twig',
+        'article' => $article
+    ));
+
+
 }
+
+
+}
+

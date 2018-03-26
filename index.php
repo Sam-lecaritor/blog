@@ -6,8 +6,8 @@ require 'app/bootstrap.php';
 if(isset($_GET['url'])){
 
     $urlarray = explode('/', $_GET['url']);
-    d($_GET['url']);
-    d($urlarray);
+   // d($_GET['url']);
+   // d($urlarray);
  
 }else{
 
@@ -26,6 +26,19 @@ if(isset($_GET['url'])){
             $articles= new Controllers\Articles_controller($twig);
             $articles->afficherListeArticles();
             break;
+
+        case 'chapitre':
+
+            $articles= new Controllers\Articles_controller($twig);
+            $articles->afficherArticle($urlarray[1]);
+            break;   
+            
+         case 'admin':
+    echo $twig->render('admin.twig', array(
+        'moteur_name' => 'Twig'
+    ));
+            break;    
+
 
         case 'home3':
 

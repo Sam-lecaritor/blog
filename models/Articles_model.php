@@ -10,7 +10,6 @@ private $db;
 
         $db = new \App\Db_connect();
         $this->db = $db->connect();
-        echo 'test pour le model des articles';
 
     }
 
@@ -21,6 +20,24 @@ private $db;
 
     }
 
+   public function getArticle($slug){
+
+    $slug= filter_var($slug, FILTER_SANITIZE_URL);
+
+ $billet = $this->db->prepare('select * from articles WHERE slug=?');
+
+ $billet->execute(array($slug));
+ 
+    return $billet->fetch();
+
+    }
 
 
 }
+/* 
+    $bdd = $this->getBdd();
+    $commentaires = $bdd->prepare('select COM_ID as id, COM_DATE as date,'
+    . ' COM_AUTEUR as auteur, COM_CONTENU as contenu from T_COMMENTAIRE'
+    . ' where BIL_ID=?');
+    $commentaires->execute(array($idBillet));
+    return $commentaires; */

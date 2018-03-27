@@ -34,9 +34,9 @@ if(isset($_GET['url'])){
             break;   
             
          case 'admin':
-    echo $twig->render('admin.twig', array(
-        'moteur_name' => 'Twig'
-    ));
+            $articles= new Controllers\Admin_controller($twig);
+            $articles->afficherAdmin();
+
             break;    
 
 

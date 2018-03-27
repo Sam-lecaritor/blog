@@ -11,7 +11,7 @@ if(isset($_GET['url'])){
  
 }else{
 
-    $urlarray='home';
+    $urlarray='Home';
 }
 
     switch ($urlarray[0]) {
@@ -35,7 +35,7 @@ if(isset($_GET['url'])){
             
          case 'admin':
             $articles= new Controllers\Admin_controller($twig);
-            $articles->afficherAdmin();
+            $articles->afficherAdmin($urlarray);
 
             break;    
 

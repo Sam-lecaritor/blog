@@ -15,8 +15,13 @@ private $db;
 
     public function getListeArticles(){
 
- $billets = $this->db->query('select * from articles');
-    return $billets->fetchall();
+    $billets = $this->db->query('select * from articles');
+
+    if($billets){
+        return $billets->fetchall();
+    }else{
+        return null;
+    }
 
     }
 
@@ -24,9 +29,9 @@ private $db;
 
     $slug= filter_var($slug, FILTER_SANITIZE_URL);
 
- $billet = $this->db->prepare('select * from articles WHERE slug=?');
+    $billet = $this->db->prepare('select * from articles WHERE slug=?');
 
- $billet->execute(array($slug));
+    $billet->execute(array($slug));
  
     return $billet->fetch();
 

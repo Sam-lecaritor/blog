@@ -18,28 +18,42 @@ $this->template = $twig;
 }
 
 
-public function afficherAdmin(){
+public function afficherAdmin($params){
 
 //$listeArticles = $this->article_model->getListeArticles();
+d($params);
 
-    echo $this->template->render('back/admin.twig', array(
+if(isset($params[1]) && $params[1] === 'articles' && !isset($params[2])){
+
+    echo $this->template->render('back/articles.twig', array(
         'moteur_name' => 'Twig'
     ));
 
 }
-/*
+if(isset($params[1]) && $params[1] === 'articles' && isset($params[2]) && $params[2] === 'ajouter'){
 
-public function afficherArticle($slug){
-
-$article = $this->article_model->getArticle($slug);
-d($article);
-    echo $this->template->render('SingleArticles.twig', array(
-        'moteur_name' => 'Twig',
-        'article' => $article
+    echo $this->template->render('back/editeurAricles.twig', array(
+        'moteur_name' => 'Twig'
     ));
 
+}
+if((isset($params[1]) && $params[1] ==='dashboard' ) || !isset($params[1])){
 
-} */
+        echo $this->template->render('back/dashboard.twig', array(
+        'moteur_name' => 'Twig'
+    ));
+}
+
+
+
+
+
+/*     echo $this->template->render('back/admin.twig', array(
+        'moteur_name' => 'Twig'
+    )); */
+
+}
+
 
 
 }

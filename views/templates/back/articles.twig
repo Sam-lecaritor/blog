@@ -12,30 +12,39 @@
 
 <br>
 
+<div class="container-fluid ">
+        
+        {% for item in articles %}
 
-<div class="card" style="width: 80%;">
-  <div class="card-body">
-    <h5 class="card-title">Nom du chapitre</h5>
-    <h6 class="card-subtitle mb-2 text-muted">chapitre numero : ?</h6>
-    <p class="card-text">les 150 premieres lettres pour un apperçu rapide ....</p>
-    <a href="#" class="card-link">editer</a>
-    <a href="#" class="card-link">supprimer</a>
+            <div class="card" style="width: 80%;">
+                <div class="card-body">
+                    <h5 class="card-title">Nom du chapitre</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">chapitre numero : ?</h6>
+                    <p class="card-text">les 150 premieres lettres pour un apperçu rapide ....</p>
+                    <a href="#" class="card-link">editer</a>
+                    <a href="#" class="card-link">supprimer</a>
 
-    <p>
-    commentaires
- <span class="badge badge-primary badge-pill">14</span>
-    </p>
+                    <p>
+                     commentaires
+                      <span class="badge badge-primary badge-pill">14</span>
+                     </p>
 
-    <p>
-    signalements
- <span class="badge badge-primary badge-pill">14</span>
-    </p>
- 
-  </div>
-</div>
+                    <p>
+                     signalements
+                    <span class="badge badge-primary badge-pill">14</span>
+                    </p>
+            
+            </div>
+            </div> 
 
 
+        {% endfor %}
+        </div>
 <br>
+<br>
+
+
+
 
 
 

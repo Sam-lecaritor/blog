@@ -7,16 +7,61 @@
   <script>tinymce.init({ selector:'textarea' });</script>
 
 
+{% for message in messages %}
+
+<div class="alert alert-danger" role="alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+  {{message}}
+</div>
+
+ {% endfor %}
+
+
+
  <h1>
  Editeur de texte
  </h1>
 
 
- <form method="post" action='post'>
-    <div class="form-group">
 
-        <textarea>
+
+
+        <form method="post" action='post'>
+        
+            <div class="form-group row">
+
+        <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Titre</span>
+        </div>
+        <input name="titre" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="{{article.titre}}" placeholder="titre du chapitre">
+        </div>
+
+        <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text mb-3" id="">slug</span>
+        </div>
+
+        <input name ="slug" value="{{article.slug}}" type="text" class="form-control mb-3" placeholder=" titre visible dans l' url du chapitre">
+
+            <div class="input-group-prepend ">
+            <span class="input-group-text mb-3"  id="">Numéro du chapitre</span>
+        </div>
+
+        <input  name ="chapitre" value="{{article.chapitre}}" type="number" class="form-control mb-3">
+
+        </div>
+
+        <br>
+
+{# zone de texte du wysiwyg #}
+        <textarea rows="15" name="texte">
+
+        {{article.texte}}
         </textarea>
+{# zone de texte du wysiwyg #}
 
 <br>
         <button type="enregistrer" class="btn btn-primary">Submit</button>
@@ -28,4 +73,6 @@
 <br>
 
 {% include 'sidenavfin.twig' %}
+
+
 {% include 'footer.twig' %}

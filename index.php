@@ -2,7 +2,6 @@
 
 require 'app/bootstrap.php';
 
-
 if(isset($_GET['url'])){
 
     $urlarray = explode('/', $_GET['url']);
@@ -11,20 +10,20 @@ if(isset($_GET['url'])){
  
 }else{
 
-    $urlarray='Home';
+    $urlarray[0]='Home';
 }
 
     switch ($urlarray[0]) {
         case 'Home':
 
             $articles= new Controllers\Articles_controller($twig);
-            $articles->afficherListeArticles();
+            $articles->afficherListeArticles('Accueil');
             break; 
 
         case 'chapitres':
 
             $articles= new Controllers\Articles_controller($twig);
-            $articles->afficherListeArticles();
+            $articles->afficherListeArticles('Chapitres');
             break;
 
         case 'chapitre':
@@ -45,6 +44,6 @@ if(isset($_GET['url'])){
             break;
 
             default:
-            echo "i égal default";
+            echo "page erreur 404";
 
     }

@@ -18,11 +18,12 @@ $this->article_model = new \Models\Articles_model();
 }
 
 
-public function afficherListeArticles(){
+public function afficherListeArticles($title){
 
 $listeArticles = $this->article_model->getListeArticles();
 
     echo $this->template->render('articles.twig', array(
+        'page_title' => $title,
         'moteur_name' => 'Twig',
         'articles' => $listeArticles
     ));
@@ -33,9 +34,10 @@ $listeArticles = $this->article_model->getListeArticles();
 
 public function afficherArticle($slug){
 
-$article = $this->article_model->getArticle($slug);
+$article = $this->article_model->getArticleBySlug($slug);
 d($article);
     echo $this->template->render('SingleArticles.twig', array(
+        'page_title' => $article["slug"],
         'moteur_name' => 'Twig',
         'article' => $article
     ));

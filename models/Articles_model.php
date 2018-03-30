@@ -1,6 +1,6 @@
 <?php
 namespace Models;
-require 'app/Db_connect.php';
+
 
 class Articles_model{
 
@@ -25,7 +25,7 @@ private $db;
 
     }
 
-   public function getArticle($slug){
+   public function getArticleBySlug($slug){
 
     $slug= filter_var($slug, FILTER_SANITIZE_URL);
 
@@ -36,6 +36,40 @@ private $db;
     return $billet->fetch();
 
     }
+
+   public function getArticleById($idChapitre){
+
+   
+
+    $billet = $this->db->prepare('select * from articles WHERE id_chapitre=?');
+
+    $billet->execute(array($idChapitre));
+ 
+    return $billet->fetch();
+
+    }
+
+
+   public function setArticle($datas){
+
+    $billet = $this->db->prepare("INSERT INTO articles (title, text, slug, id_chapitre) VALUES (:title, :text, :slug, :id_chapitre)");
+
+    $billet->bindParam(':title', $title);
+    $billet->bindParam(':text', $text);
+    $billet->bindParam(':slug', $slug);
+    $billet->bindParam(':id_chapitre', $id_chapitre);
+
+    $title= $datas['titre'];
+    $text= $datas['texte'];
+    $slug= preg_replace('`[^a-z0-9]+`', '-', $datas['slug'] );
+    $slug=trim($slug, '-');
+    $id_chapitre= $datas['chapitre'];
+
+   return $billet->execute();
+ 
+
+    }
+
 
 
 }

@@ -16,8 +16,7 @@ if(isset($_GET['url'])){
         /**page d'accueil du site */
         case 'Home':
 
-            $articles= new Controllers\Articles_controller($twig);
-            $articles->afficherListeArticles('Accueil');
+            echo $twig->render('index.twig', array());
             break; 
         /**page de la liste des articles coté utilisateurs */
         case 'chapitres':

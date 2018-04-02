@@ -1,17 +1,24 @@
-{% include 'header.twig' %}
-{% include 'navbar.twig' %}
+{% include 'parts/header.twig' %}
+{% include 'parts/navbar.twig' %}
 {# {% include 'sidenav.twig' %} #}
 
 
-<div class = "article">
+<div class = "container article">
 
 <h1 class="text-center">
-{{ article.title }}
+{{ article.title|raw }}
 </h1>
+
+
+{{ article.text|raw }}
 
 </div>
 
 
 
+
+
+
+
 {# {% include 'loginform.twig' %} #}
-{% include 'footer.twig' %}
+{% include 'parts/footer.twig' %}

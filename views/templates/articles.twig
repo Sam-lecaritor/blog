@@ -1,46 +1,50 @@
-{% include 'header.twig' %}
-{% include 'navbar.twig' %}
-{# {% include 'sidenav.twig' %} #}
+{% include 'parts/header.twig' %}
+{% include 'parts/navbar.twig' %}
 
 
 
+<h1>
+les chapitres du livres
 
-    <ul id="navigation">
-    {% for item in articles %}
-        <li>
-        {{ item.title }} id : {{ item.id }}
-        <a href="/blog/chapitre/{{ item.slug }}">test url</a>
-        </li>
-
-    {% endfor %}
-    </ul>
+</h1>
 
 
-    {% if nbr_pages > 1  %}
+<div class="row container-fluid padding-left padding-top">
+        
+        {% for item in articles %}
 
-    <nav aria-label="Page navigation example">
-    <ul class="pagination"> 
 
-        {% if index_page > 1  %}
+        <div class="col-xs-6 ">
 
-            <li class="page-item"><a class="page-link" href="/blog/chapitres/{{index_page - 1}}">Previous</a></li>
-        {% endif %}
+            <div class="card" style="width: 80%;">
+                <div class="card-body">
+                <a href="/blog/chapitre/{{ item.slug }}">
 
-        {% for i in range(1, nbr_pages) %}
-            <li class="page-item">
-            <a class="page-link" href="/blog/chapitres/{{ i }}">{{ i }}</a>
-            </li>
+                    <h5 class="card-title"> {{ item.title }}</h5>
+
+                    <h6 class="card-subtitle mb-2 text-muted">chapitre numero :  {{ item.id_chapitre}}</h6>
+                 </a>
+                 <br>
+
+                    {% autoescape %}
+                    <p class="card-text"> {{ item.text[:140]|striptags|raw }} ....</p>
+                    {% endautoescape %}
+
+
+                    <br>
+                    <p>
+                     commentaires
+                      <span class="badge badge-primary badge-pill">14</span>
+                     </p>
+
+                </div>
+            </div> 
+    </div> 
         {% endfor %}
 
-        {% if index_page <= nbr_pages -1 %}
-
-            <li class="page-item"><a class="page-link" href="/blog/chapitres/{{index_page + 1}}">Next</a></li>
-        {% endif %}
-
-    </ul>
-    </nav>
-    {% endif %}
+</div>
 
 
-{# {% include 'loginform.twig' %} #}
-{% include 'footer.twig' %}
+{% include 'parts/paginateArticles.twig' %}
+
+{% include 'parts/footer.twig' %}

@@ -1,9 +1,35 @@
-html,
 body {
     position: relative;
-    min-height: 100%;
-    height: 100%;
+    background-color: rgba(161, 158, 158, 0.158);
 }
-.card{
-        margin-bottom: 30px;
+
+.card {
+    margin: 10px;
+    margin-bottom: 30px;
+    min-width: 350px;
+    max-width: 350px;
+    height: 300px;
+}
+
+h1,
+.img {
+    padding: 20px;
+}
+
+.content-center {
+    margin-right: auto;
+    margin-left: auto;
+    width: 40%;
+}
+
+.padding-top {
+    padding-top: 60px;
+}
+
+.padding-bottom {
+    padding-bottom: 80px;
+}
+
+.padding-left {
+    padding-left: 35px;
 }

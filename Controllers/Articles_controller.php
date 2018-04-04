@@ -19,7 +19,7 @@ class Articles_controller {
 
     public function afficherListeArticles($title, $url=null){
 
-       $nbr_pages= $this->article_model->countPagesPublishedArticles();
+        $nbr_pages= $this->article_model->countPagesPublishedArticles();
        
         if(!isset($url[1]) || $url[1] < 1 ){
 
@@ -35,7 +35,6 @@ class Articles_controller {
 
         echo $this->template->render('articles.twig', array(
             'page_title' => $title,
-            'moteur_name' => 'Twig',
             'articles' => $listeArticles,
             'index_page' => intval($url[1]),
             'nbr_pages' => $nbr_pages
@@ -55,8 +54,20 @@ class Articles_controller {
             'article' => $article
         ));
         }else{
-            echo $this->template->render('page404.twig', array());
+            $this->getPage404();
         }
+    }
+
+
+    public function getPageIndex(){
+
+        echo $this->template->render('index.twig', array());
+    }
+
+
+    public function getPage404(){
+
+        echo $this->template->render('page404.twig', array());
     }
 
 }

@@ -5,41 +5,77 @@
 
 
 
-<div class="container-fluid text-center">
+<div class="container-fluid text-right">
 
-    <a href="articles/ajouter" class="btn btn-secondary" >ajouter un article</a>
+    <a href="/blog/admin/articles/ajouter" class="btn btn-lg btn-warning col-xs-6 col-xs-offset-3 col-md-3 col-md-offset-1" >ajouter un article</a>
 </div>
 
-<br>
 
-<div class="container-fluid ">
+<div class="row container-fluid padding-left padding-top ">
         
         {% for item in articles %}
 
-            <div class="card" style="width: 80%;">
+        <div class="col-xs-6 ">
+
+            <div class="card" >
                 <div class="card-body">
-                    <h5 class="card-title">Nom du chapitre</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">chapitre numero : ?</h6>
-                    <p class="card-text">les 150 premieres lettres pour un apperçu rapide ....</p>
-                    <a href="#" class="card-link">editer</a>
-                    <a href="#" class="card-link">supprimer</a>
+                <a href="/blog/chapitre/{{ item.slug }}">
 
-                    <p>
-                     commentaires
-                      <span class="badge badge-primary badge-pill">14</span>
-                     </p>
+                    <h5 class="card-title"> {{ item.title }}</h5>
 
-                    <p>
-                     signalements
-                    <span class="badge badge-primary badge-pill">14</span>
-                    </p>
+                    <h6 class="card-subtitle mb-2 text-muted">chapitre numero :  {{ item.id_chapitre}}</h6>
+                 </a>
+
                     <p>
                      publié
+            {% if item.published > 0 %}
                     <span class="badge badge-primary badge-pill">oui</span>
-                    </p>
-            
+            {% endif %}
+
+            {% if item.published < 1  %}
+                    <span class="badge badge-warning badge-pill">non</span>
+            {% endif %} 
+
+                  </p>
+
+                 <hr>
+{# 
+                <p>Apperçu : </p>
+                    {% autoescape %}
+                    <p class="card-text"> {{ item.text[:140]|striptags|raw }} ....</p>
+                    {% endautoescape %}
+
+
+                <hr> #}
+                <div class="row container">
+
+                    <div class="col-md-6 col-md-offset-1 ">
+                        <p>
+                        commentaires
+                        <span class="badge badge-primary badge-pill">14 </span>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>
+                        signalements
+                        <span class="badge badge-primary badge-pill">14 </span>
+                        </p>
+                    </div> 
+                    <hr>
+                    <div class="col-md-6 col-md-offset-1 ">
+                        <a href="/blog/admin/article/{{item.slug}}/edit" class="btn btn-sm btn-success" role="button">éditer</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="/blog/admin/article/{{item.slug}}/delete" class="btn btn-sm btn-danger" role="button">supprimer</a>
+                    </div>
+                </div>
             </div>
-            </div> 
+
+
+
+
+        </div> 
+    </div> 
 
 
         {% endfor %}
@@ -48,9 +84,6 @@
 <br>
 
 
-
-
-
-
+{% include 'parts/paginateArticlesAdmin.twig' %}
 {% include 'parts/sidenavfin.twig' %}
-{% include 'parts/footer.twig' %}
+{% include 'parts/endScript.twig' %}

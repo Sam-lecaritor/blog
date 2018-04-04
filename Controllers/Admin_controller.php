@@ -14,54 +14,74 @@ $this->template = $twig;
 $this->article_model = new \Models\Articles_model();
 $this->validateur = new \App\Validateur();
 
-
 }
 
 
-public function afficherAdmin($params){
+
+    public function getArticlesList($params){
+
+        $nbr_pages= $this->article_model->countPagesArticles();
+
+            if(!isset($params[3]) || $params[3] < 1 ){
+
+            $articles = $this->article_model->getListeArticlesLimit(1);
+            $params[3]=1;
+
+            }else{
+
+            $articles = $this->article_model->getListeArticlesLimit(intval($params[3]));
+
+            }
+
+            echo $this->template->render('back/articles.twig', array(
+                'articles' => $articles,
+                'page_title' => 'liste des articles',
+                'index_page' => intval($params[3]),
+                'nbr_pages' => $nbr_pages
+        ));
 
 
+    }
 
-//d($params);
+    public function getEditeur(){
 
-if(isset($params[1]) && $params[1] === 'articles' && !isset($params[2])){
+         $count = $this->article_model->getIndexDernierChapitre();
+         $count = intval($count['id_chapitre']) +1;
 
-    $articles = $this->article_model->getListeArticles();
-    //d($articles);
-    echo $this->template->render('back/articles.twig', array(
-        'articles' => $articles,
-        'page_title' => 'ensemble des articles'
-    ));
-
-}
-
-
-if(isset($params[1]) && $params[1] === 'articles' && isset($params[2])) {
-
-    switch ($params[2]) {
-
-        case 'ajouter':
             echo $this->template->render('back/editeurAricles.twig', array(
-            'moteur_name' => 'Twig'
+            'page_title' => 'editeur',   
+            'index_chapitre' => $count
              ));
-    
-            break;
 
-        case 'post':
-           
+    }
 
-        if(isset($_POST) ){
 
-         $validateur = $this->validateur->validerPostArticle($_POST);
+    public function getAdmin(){
 
-                if($validateur['checked'] === true){
+        echo $this->template->render('back/dashboard.twig', array(
+            'page_title' => 'Administration'
+        ));
+    }
 
-                 $req = $this->article_model->setArticle($_POST);
- /*                    header('Location: /blog/admin');
-                    exit(); */
+
+    public function postArticle(){
+
+
+            if(isset($_POST) ){
+
+                $validateur = $this->validateur->validerPostArticle($_POST);
+
+                     if($validateur['checked'] === true){
+
+                        $req = $this->article_model->setArticle($_POST);
+
+                        header('Location: /blog/admin');
+                        exit(); 
+
                     if($req){
 
                         echo $this->template->render('back/editeurAricles.twig', array(
+                        'page_title' => 'poster article',   
                         'article' => $validateur['post']
                         ));
 
@@ -70,6 +90,7 @@ if(isset($params[1]) && $params[1] === 'articles' && isset($params[2])) {
                         'messages' => array(
                             'erreur' => "erreur dans l' enregistrement dans la base de données"
                         ),
+                        'page_title' => 'poster article',
                         'article' => $_POST
                         ));
                     }
@@ -78,45 +99,125 @@ if(isset($params[1]) && $params[1] === 'articles' && isset($params[2])) {
 
                     echo $this->template->render('back/editeurAricles.twig', array(
                     'messages' => $validateur['messages'],
+                    'page_title' => 'poster article',
                     'article' => $_POST
                     ));
 
                 } 
 
-            // $this->article_model->getListeArticles();
-
         }else{
 
              echo $this->template->render('back/editeurAricles.twig', array(
+            'page_title' => 'poster article',   
             'article' => $_POST
              ));
 
         }
- 
-            break;
+    }
 
-            default:
-            echo "page erreur 404";
+
+    public function editArticle($params){
+
+        $article = $this->article_model->getArticleBySlug($params[2]);
+        echo $this->template->render('back/editSingleArticle.twig', array(
+            'page_title' => 'editer article',   
+            'article' => $article
+             ));
+    }
+
+    /** 
+     * mise a jour des articles
+     * 
+     * 
+    */
+
+    public function updateArticle($params){
+
+        if(isset($params[3]) && $params[3] === "update"){
+            if(isset($_POST) ){
+
+                $validateur = $this->validateur->validerUpdateArticle($_POST);
+
+                     if($validateur['checked'] === true){
+                        $req = $this->article_model->updateArticle($_POST);
+
+                        header('Location: /blog/admin/articles/list/');
+                        exit();  
+
+                    if($req){
+
+                        echo $this->template->render('back/editSingleArticle.twig.twig', array(
+                        'page_title' => 'update article',   
+                        'article' => $validateur['post']
+                        ));
+
+                    }else{
+                        echo $this->template->render('back/editSingleArticle.twig.twig', array(
+                        'messages' => array(
+                            'erreur' => "erreur dans l' enregistrement dans la base de données"
+                        ),
+                        'page_title' => 'update article',
+                        'article' => $_POST
+                        ));
+                    }
+
+                }else{
+
+                    echo $this->template->render('back/editSingleArticle.twig.twig', array(
+                    'messages' => $validateur['messages'],
+                    'page_title' => 'update article',
+                    'article' => $_POST
+                    ));
+
+                }  
+
+        }else{
+
+             echo $this->template->render('back/editeurAricles.twig', array(
+            'page_title' => 'poster article',   
+            'article' => $_POST
+             ));
+
+        }
+
+    } 
 }
 
 
-}
-if((isset($params[1]) && $params[1] ==='dashboard' ) || !isset($params[1])){
+        public function DeletArticle($params= null){
+    //slug = $params[2]
+        $req = $this->article_model->DeletArticle($params[2]);
 
-        echo $this->template->render('back/dashboard.twig', array(
-        'moteur_name' => 'Twig'
-    ));
-}
+        if($req){
+
+            header('Location: /blog/admin/articles/list');
+            exit(); 
+
+        }else{
+
+            echo "erreur dans la suppression de l'article";
+        }
+
+
+    }
+
+
+        public function articlePreview($params= null){
+    //slug = $params[2]
+
+ }
 
 
 
+    public function getPage404(){
+
+             echo $this->template->render('page404.twig', array(
+            'page_title' => '404'
+             ));
+
+    }
 
 
-/*     echo $this->template->render('back/admin.twig', array(
-        'moteur_name' => 'Twig'
-    )); */
-
-}
 
 
 

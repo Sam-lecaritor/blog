@@ -2,6 +2,7 @@
 
 require 'app/bootstrap.php';
 
+
 if(isset($_GET['url'])){
 
     $urlarray = explode('/', $_GET['url']);
@@ -11,32 +12,25 @@ if(isset($_GET['url'])){
     $urlarray[0]='Home';
 }
 
-    switch ($urlarray[0]) {
 
-        /**page d'accueil du site */
-        case 'Home':
+if($urlarray[0] === 'admin' ){
+        if($_SESSION['isADMIN'] === 'isadmin' ){
 
-            echo $twig->render('index.twig', array());
-            break; 
-        /**page de la liste des articles coté utilisateurs */
-        case 'chapitres':
+            $routeur = new Routeurs\Admin_router($twig);
+            $routeur->routerAdmin($urlarray);
 
-            $articles= new Controllers\Articles_controller($twig);
-            $articles->afficherListeArticles('Chapitres', $urlarray);
-            break;
-        /** page single article */
-         case 'chapitre':
+        }else{
 
-            $articles= new Controllers\Articles_controller($twig);
-            $articles->afficherArticle($urlarray[1]);
-            break;    
-        /** adimistration du site */
-         case 'admin':
-            $articles= new Controllers\Admin_controller($twig);
-            $articles->afficherAdmin($urlarray);
-            break;    
+            //logincontroller do something
+           $routeur = new Controllers\Login_controller($twig);
+           $routeur->logAdmin();
+        }
 
-            default:
-            echo $twig->render('page404.twig', array());
+}else{
 
-    }
+            $routeur = new Routeurs\Users_router($twig);
+            $routeur->routerUser($urlarray);
+}
+
+
+

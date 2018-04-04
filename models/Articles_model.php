@@ -77,9 +77,6 @@ private $articleParPages = 6;
 
     }
 
-
-
-
 /**
  * recupere un article grace au slug de l'url
  * renvoie la totalité des données de l'article
@@ -146,6 +143,59 @@ private $articleParPages = 6;
     return $billet->execute();
  
     }
+
+/**
+ * 
+ * mise a jour d'un article
+ * 
+ * 
+ */
+
+    public function updateArticle($datas){
+
+        $idChapitre = intval($datas['chapitre']);
+
+        $billet = $this->db->prepare("UPDATE articles 
+            SET title= :title, text= :text, slug= :slug , published= :published
+            WHERE id_chapitre= $idChapitre");
+
+        $billet->bindParam(':title', $title);
+        $billet->bindParam(':text', $text);
+        $billet->bindParam(':slug', $slug);
+        $billet->bindParam(':published', $published);
+
+        if(isset($datas['published'])){
+            $published = 1;
+        }else{
+            $published = 0;
+        }
+
+        $title= $datas['titre'];
+        $text= $datas['texte'];
+        $slug= preg_replace('`[^a-z0-9]+`', '-', $datas['slug'] );
+        $slug=trim($slug, '-');
+
+    return $billet->execute();
+
+    }
+
+
+    
+
+    public function DeletArticle($slug){
+
+        $billet = $this->db->prepare(
+            "DELETE FROM articles 
+            WHERE slug= :slug
+            LIMIT 1");
+
+        $billet->bindParam(':slug', $slug);
+
+        return $billet->execute();
+    }
+
+
+
 /**
  * compter tout les articles
  */
@@ -184,6 +234,23 @@ private $articleParPages = 6;
         return ceil($this->countArticles()/$this->articleParPages);
 
     }
+
+
+    public function getIndexDernierChapitre(){
+            d($articles);
+        $billet = $this->db->prepare('SELECT id_chapitre
+                 From articles 
+                 ORDER BY id_chapitre DESC
+                 LIMIT 1');
+
+        $billet->execute();
+    
+        return $billet->fetch($this->db::FETCH_ASSOC);
+
+    }
+
+
+
 
 
 }

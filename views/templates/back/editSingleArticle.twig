@@ -28,7 +28,7 @@
 
 
 
-        <form method="post" action='post'>
+        <form method="post" action='update'>
         
             <div class="form-group row">
 
@@ -36,7 +36,7 @@
         <div class="input-group-prepend">
             <span class="input-group-text" id="inputGroup-sizing-default">Titre</span>
         </div>
-        <input name="titre" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="{{article.titre}}" placeholder="titre du chapitre">
+        <input name="titre" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="{{article.title}}" placeholder="titre du chapitre">
         </div>
 
         <div class="input-group">
@@ -50,8 +50,9 @@
             <span class="input-group-text mb-3"  id="">Numéro du chapitre</span>
         </div>
 
-        <input  name ="chapitre" 
-        value="{{article.chapitre > 0 ? article.chapitre : index_chapitre }}" type="number" class="form-control mb-3">
+        <input  name ="chapitreold" 
+        value="{{article.id_chapitre}}" type="number" class="form-control mb-3" disabled>
+                <input type="hidden" name ="chapitre" value="{{article.id_chapitre}}" type="number">
 
         </div>
 
@@ -65,7 +66,7 @@
 {# zone de texte du wysiwyg #}
         <textarea rows="15" name="texte">
 
-        {{article.texte}}
+        {{article.text}}
         </textarea>
 {# zone de texte du wysiwyg #}
 

@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+session_start();
+
 //autoloading de composer
 require 'vendor/autoload.php';
 

@@ -14,7 +14,8 @@ if(isset($_GET['url'])){
 
 
 if($urlarray[0] === 'admin' ){
-        if($_SESSION['isADMIN'] === 'isadmin' ){
+        if(isset($_SESSION['isADMIN'])
+         && $_SESSION['isADMIN'] === 'isadmin' ){
 
             $routeur = new Routeurs\Admin_router($twig);
             $routeur->routerAdmin($urlarray);

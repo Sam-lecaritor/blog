@@ -180,7 +180,7 @@ private $articleParPages = 6;
     }
 
 
-    
+
 
     public function DeletArticle($slug){
 
@@ -237,7 +237,7 @@ private $articleParPages = 6;
 
 
     public function getIndexDernierChapitre(){
-            d($articles);
+
         $billet = $this->db->prepare('SELECT id_chapitre
                  From articles 
                  ORDER BY id_chapitre DESC

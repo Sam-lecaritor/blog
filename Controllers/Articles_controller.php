@@ -45,7 +45,6 @@ class Articles_controller {
     public function afficherArticle($slug){
 
         $article = $this->article_model->getArticleBySlug($slug);
-        d($article);
         if($article){
 
             echo $this->template->render('SingleArticles.twig', array(

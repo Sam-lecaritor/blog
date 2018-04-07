@@ -1,19 +1,19 @@
-html {
-    position: relative;
-    min-height: 100%;
-}
-
 body {
-    position: relative;
+    /* position: absolute; */
     background-color: rgba(161, 158, 158, 0.158);
-   /*  min-height: 900px; */
+    
+     min-height: 900px; 
+     min-width: 100%;
 }
 
 #wrapper,
 .article, .error {
+    position: relative;
+    /* min-height: 900px; */
+}
+.blog-content{
     min-height: 900px;
 }
-
 .error > h1 {
 
     text-align: center;

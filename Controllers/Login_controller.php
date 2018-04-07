@@ -30,6 +30,8 @@ class Login_controller{
 
     if(isset($_POST['user']) && isset($_POST['mdp']) ){
 
+    $_POST['user'] = trim($_POST['user']);
+    $_POST['mdp'] = trim($_POST['mdp']);
     $_POST['user'] = filter_var ( $_POST['user'], FILTER_SANITIZE_STRING);
     $_POST['mdp'] = filter_var ( $_POST['mdp'], FILTER_SANITIZE_STRING);
 

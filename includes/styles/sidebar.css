@@ -114,7 +114,7 @@ body {
   }
   #page-content-wrapper {
     padding: 20px;
-    position: relative;
+   /*  position: relative; */
   }
   #wrapper.toggled #page-content-wrapper {
     position: relative;

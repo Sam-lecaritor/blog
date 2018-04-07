@@ -1,9 +1,20 @@
 /* Footer */
+
 /* 
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'); */
-section > #footer {
+
+section>#footer {
+    position: absolute;
     padding-bottom: 30px;
     bottom: 0;
+    height: 1.5em;
+    margin: auto;
+}
+
+.footer-container {
+    text-align: center;
+    width: 400px;
+    margin-left: 30%
 }
 
 section .section-title {
@@ -11,13 +22,15 @@ section .section-title {
     color: #007b5e;
     margin-bottom: 50px;
     text-transform: uppercase;
+    min-width: 100%;
 }
 
 #footer {
-    margin-top: 30px;
-     position: relative; 
-     bottom: 0; 
-    min-width: 100%;
+    margin-top: 50px;
+    margin-left: -20px;
+    position: relative;
+    bottom: -20px;
+    min-width: 120%;
     background: rgb(2, 141, 196) !important;
 }
 

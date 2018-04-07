@@ -157,7 +157,8 @@ private $articleParPages = 6;
 
         $billet = $this->db->prepare("UPDATE articles 
             SET title= :title, text= :text, slug= :slug , published= :published
-            WHERE id_chapitre= $idChapitre");
+            WHERE id_chapitre= $idChapitre
+            LIMIT 1");
 
         $billet->bindParam(':title', $title);
         $billet->bindParam(':text', $text);

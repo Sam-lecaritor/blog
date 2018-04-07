@@ -1,49 +1,46 @@
 {% include 'parts/header.twig' %}
 {% include 'parts/navbar.twig' %}
 
-
-
 <h1>
-les chapitres du livres
+    les chapitres du livres
 
 </h1>
 
-
 <div class="row container-fluid padding-left padding-top">
-        
-        {% for item in articles %}
 
+    {% for item in articles %}
 
         <div class="col-xs-6 ">
-
             <div class="card" style="width: 80%;">
                 <div class="card-body">
-                <a href="/blog/chapitre/{{ item.slug }}">
+                    <a href="/blog/chapitre/{{ item.slug }}">
 
-                    <h5 class="card-title"> {{ item.title }}</h5>
+                        <h5 class="card-title">
+                            {{ item.title }}</h5>
 
-                    <h6 class="card-subtitle mb-2 text-muted">chapitre numero :  {{ item.id_chapitre}}</h6>
-                 </a>
-                 <br>
+                        <h6 class="card-subtitle mb-2 text-muted">chapitre numero :
+                            {{ item.id_chapitre}}</h6>
+                    </a>
+                    <br>
 
                     {% autoescape %}
-                    <p class="card-text"> {{ item.text[:140]|striptags|raw }} ....</p>
+                        <p class="card-text">
+                            {{ item.text[:140]|striptags|raw }}
+                            ....</p>
                     {% endautoescape %}
-
 
                     <br>
                     <p>
-                     commentaires
-                      <span class="badge badge-primary badge-pill">14</span>
-                     </p>
+                        commentaires
+                        <span class="badge badge-primary badge-pill">14</span>
+                    </p>
 
                 </div>
-            </div> 
-    </div> 
-        {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
 
 </div>
-
 
 {% include 'parts/paginateArticles.twig' %}
 

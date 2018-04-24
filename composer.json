@@ -1,7 +1,8 @@
 {
     "require": {
         "kint-php/kint": "^2.2",
-        "twig/twig": "~2.0"
+        "twig/twig": "~2.0",
+        "phpunit/phpunit": "5.7.*"
     },
 "autoload": {
     "psr-4": {

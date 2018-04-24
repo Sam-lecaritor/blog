@@ -29,13 +29,15 @@ class Login_controller{
     public function logAdmin(){
 
     if(isset($_POST['user']) && isset($_POST['mdp']) ){
+        
 
-    $_POST['user'] = trim($_POST['user']);
-    $_POST['mdp'] = trim($_POST['mdp']);
-    $_POST['user'] = filter_var ( $_POST['user'], FILTER_SANITIZE_STRING);
-    $_POST['mdp'] = filter_var ( $_POST['mdp'], FILTER_SANITIZE_STRING);
 
-      if( $_POST['user'] === ADMIN_NAME && password_verify($_POST['mdp'], ADMIN_MDP)){
+    $post['user'] = trim($_POST['user']);
+    $post['mdp'] = trim($_POST['mdp']);
+    $post['user'] = filter_var ( $post['user'], FILTER_SANITIZE_STRING);
+    $post['mdp'] = filter_var ( $post['mdp'], FILTER_SANITIZE_STRING);
+
+      if( $post['user'] === ADMIN_NAME && password_verify($post['mdp'], ADMIN_MDP)){
 
             $_SESSION['isADMIN'] = 'isadmin';
 

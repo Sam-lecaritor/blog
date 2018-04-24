@@ -1,0 +1,109 @@
+{% for item in message %}
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{item}}
+    </div>
+
+{% endfor %}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ article.title|raw }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="card my-4 comments-form">
+                <h5 class="card-header">Laisser un commentaire:</h5>
+                <div class="card-body">
+                    <form action="/blog/chapitre/{{article.slug}}" method="post">
+                        <div class="form-group">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm">Pseudo</span>
+                                </div>
+                                <input name='pseudo' required="required" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" maxlength="30">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea name='comment' required="required" class="form-control" maxlength="500" rows="5"></textarea>
+                        </div>
+
+                        <input name='id_chapitre' type="hidden" value="{{article.id_chapitre}}">
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p>commentaire de 500 caractères maxi</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container article">
+
+    <ul class="list-comments">
+        <p class="btn-modal">
+            <button type="button" class="btn btn-primary btn-modal" data-toggle="modal" data-target="#exampleModal">
+                commenter
+            </button>
+
+        </p>
+        <h4>{{nbr_comments}}
+            commentaires</h4>
+
+        {% for item in comments %}
+
+            <hr>
+            <li class="media">
+                <div class="media mb-4">
+
+                    {% if item.approuved < 1 %}
+
+                        {% if item.signalement < 1 %}
+                            <form method="post" action="">
+                                <input name='signalement' type="hidden" value="{{item.id}}">
+                                <button type="submit" class="btn btn-outline-danger btn-signalement">signaler</button>
+                            </form>
+                        {% endif %}
+
+                        {% if item.signalement == 1 %}
+
+                            <button type="button" class="btn btn-danger btn-signalement">signalé</button>
+
+                        {% endif %}
+
+                    {% endif %}
+
+                    {% if item.approuved == 1 %}
+
+                        <button type="button" class="btn btn-success btn-signalement">commentaire approuvé</button>
+                    {% endif %}
+                    <div class="media-body">
+                        <h5 class="mt-0">{{item.pseudo}},
+                            <span class="comment-date">
+                                {{item.date_creation}}
+                            </span>
+                        </h5>
+                        <p>
+                            {{item.content}}
+                        </p>
+
+                    </div>
+                </div>
+            </li>
+
+        {% endfor %}
+
+    </ul>
+
+</div>

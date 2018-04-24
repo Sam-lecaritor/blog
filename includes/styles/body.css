@@ -1,27 +1,28 @@
 body {
     /* position: absolute; */
     background-color: rgba(161, 158, 158, 0.158);
-    
-     min-height: 900px; 
-     min-width: 100%;
+    min-height: 900px;
+    min-width: 100%;
 }
 
 #wrapper,
-.article, .error {
+.article,
+.error {
     position: relative;
     /* min-height: 900px; */
 }
-.blog-content{
+
+.blog-content {
     min-height: 900px;
 }
-.error > h1 {
 
+.error>h1 {
     text-align: center;
     padding-top: 150px;
 }
+
 .error>.text-center>img {
-   min-width: 500px;
-    
+    min-width: 500px;
 }
 
 .card {
@@ -39,7 +40,6 @@ h1,
 
 .pagination {
     padding-left: 16px;
- 
 }
 
 .padding-top {
@@ -53,14 +53,14 @@ h1,
 .padding-left {
     padding-left: 35px;
 }
-.titre-single{
+
+.titre-single {
     padding: 50px;
     text-decoration: underline;
     text-shadow: 4px 6px #3a3a3a2c;
 }
 
-.loginform{
-
+.loginform {
     border-style: solid;
     border-width: 2px;
     border-radius: 6px;
@@ -69,39 +69,91 @@ h1,
     margin-top: 50px;
     box-shadow: 18px 8px 2px 1px rgba(8, 113, 250, .16);
     background-color: rgba(8, 113, 250, 0.514);
-
-
 }
-.loginform > h1{
+
+.loginform>h1 {
     padding: 0;
     text-align: center;
     margin-top: 15px;
     margin-bottom: -15px;
 }
 
-.checkboxEditAdmin{
-
+.checkboxEditAdmin {
     font-size: 1.2em;
-      border-style: solid;
-      border-width: 2px;
-      border-radius: 6px;
-      background-color : rgba(8, 113, 250, 0.075);
-      padding-bottom: 10px;
-      padding-top: 10px;
-      min-width: 200px;
-      margin-bottom: 20px;
-      
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 6px;
+    background-color: rgba(8, 113, 250, 0.075);
+    padding-bottom: 10px;
+    padding-top: 10px;
+    min-width: 200px;
+    margin-bottom: 20px;
 }
+
 .checkboxEditAdmin:hover {
-
     background-color: rgba(8, 113, 250, 0.26);
-
 }
-.checkboxEditAdmin>.form-check-input{
-    
+
+.checkboxEditAdmin>.form-check-input {
     font-size: 2.5em;
 }
 
-.btn-editeur{
+.btn-editeur {
     margin-top: 20px;
 }
+
+.list-comments {
+    max-width: 75%;
+    border-style: solid;
+    border-width: 2px;
+    margin-top: 80px;
+    margin-left: 30px;
+    border-radius: 6px;
+    background-color: rgba(8, 113, 250, 0.041);
+    padding: 50px;
+}
+
+.list-comments>li {
+    margin-top: 8px;
+}
+
+.list-comments>li>div>form>button {
+    margin-right: 20px;
+}
+
+.list-comments>.btn-modal {
+    margin-top: -8px;
+    margin-right: 8px;
+    float: right;
+    margin-bottom: 16px;
+}
+
+.comment-date {
+    margin-left: 35px;
+    text-align: right;
+    font-size: 0.75em;
+    color: rgb(35, 35, 41);
+ 
+    text-decoration: underline;
+}
+
+.comments-form {
+    margin: auto;
+}
+.modal-content{
+    margin-top: 150px;
+}
+
+.media-body>H5 {
+    color: black;
+    font-size: .9em;
+}
+.media-body>p{
+    color: black;
+    font-size: 1em;
+}
+.btn-signalement{
+    font-size: .7em;
+    margin-right: 20px;
+}
+

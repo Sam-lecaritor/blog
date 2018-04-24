@@ -2,19 +2,17 @@
 {% include 'parts/navbar.twig' %}
 {# {% include 'sidenav.twig' %} #}
 
-
-<div class = "container article">
-
-<h1 class="text-center titre-single">
-{{ article.title|raw }}
-</h1>
+<div class="container article">
 
 
-{{ article.text|raw }}
+
+    <h1 class="text-center titre-single">
+        {{ article.title|raw }}
+    </h1>
+
+    {{ article.text|raw }}
 
 </div>
-
-
 
 {# <div class="card center">
   <div class="card-header">
@@ -38,7 +36,9 @@
   </div>
 </div> #}
 
+<hr><hr>
 
 {# {% include 'loginform.twig' %} #}
+{% include 'parts/comments.twig' %}
 {% include 'parts/footer.twig' %}
 {% include 'parts/endScript.twig' %}

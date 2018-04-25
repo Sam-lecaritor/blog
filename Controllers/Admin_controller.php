@@ -200,6 +200,21 @@ class Admin_controller
         }
     }
 
+    public function getNewComments()
+    {
+
+    }
+
+    public function getApprouvedComments()
+    {
+
+    }
+
+    public function getReportedComments()
+    {
+
+    }
+
 /**
  * Envoie de la page editeur
  *

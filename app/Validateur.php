@@ -42,6 +42,8 @@ class Validateur
         } else {
             $slug = preg_replace('`[^a-z0-9]+`', '-', $slug);
             $slug = trim($slug, '-');
+            $slug = filter_var($slug, FILTER_SANITIZE_ENCODED);
+
         }
         return $slug;
     }
@@ -244,3 +246,4 @@ class Validateur
     }
 
 }
+

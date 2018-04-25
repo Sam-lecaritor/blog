@@ -93,13 +93,13 @@ class Articles_controller
         $article = $this->article_model->getArticleBySlug($slug);
         if ($article) {
 
-            $comments = $this->Comment_model->getCommentsById_chapitre($article['id_chapitre'][0]);
+            $comments = $this->Comment_model->getCommentsById_chapitre($article['id_chapitre']);
 
             $message = [];
 
             if (isset($_POST) && isset($_POST['signalement'])) {
                 $this->Comment_model->signalerComment($_POST['signalement']);
-                $comments = $this->Comment_model->getCommentsById_chapitre($article['id_chapitre'][0]);
+                $comments = $this->Comment_model->getCommentsById_chapitre($article['id_chapitre']);
 
             }
 
@@ -113,7 +113,7 @@ class Articles_controller
                 if ($comment['checked'] === true) {
 
                     if ($this->Comment_model->setComment($comment) === true) {
-                        $comments = $this->Comment_model->getCommentsById_chapitre($article['id_chapitre'][0]);
+                        $comments = $this->Comment_model->getCommentsById_chapitre($article['id_chapitre']);
 
                         $message[0] = "votre commentaire a été posté";
                         $_SESSION['comments'][] = $comment['id_chapitre'];
@@ -128,15 +128,24 @@ class Articles_controller
                 }
 
             }
+            if ($article["published"] === "0"
+                && (
+                    !isset($_SESSION['isADMIN'])
+                    || $_SESSION['isADMIN'] != 'isadmin')) {
 
-            echo $this->template->render('SingleArticles.twig', array(
-                'page_title' => $article["slug"],
-                'moteur_name' => 'Twig',
-                'article' => $article,
-                'message' => $message,
-                'comments' => $comments,
-                'nbr_comments' => count($comments),
-            ));
+                $this->getPage404();
+
+            } else {
+                echo $this->template->render('SingleArticles.twig', array(
+                    'page_title' => $article["slug"],
+                    'moteur_name' => 'Twig',
+                    'article' => $article,
+                    'message' => $message,
+                    'comments' => $comments,
+                    'nbr_comments' => count($comments),
+                ));
+
+            }
 
         } else {
             $this->getPage404();

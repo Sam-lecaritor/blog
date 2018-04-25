@@ -2,74 +2,75 @@
 {% include 'parts/navbar.twig' %}
 {% include 'parts/sidenavdebut.twig' %}
 
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+<script>
+    tinymce.init({selector: 'textarea'});
+</script>
 
-  <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
-  <script>tinymce.init({ selector:'textarea' });</script>
-
+{# 
+messages == [array] string
+ #}
 
 {% for message in messages %}
 
-<div class="alert alert-danger" role="alert">
-<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-  <span aria-hidden="true">&times;</span>
-</button>
-  {{message}}
-</div>
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{message}}
+    </div>
 
- {% endfor %}
+{% endfor %}
 
+<h1>
+    Ajouter un article
+</h1>
 
+{# 
+article == [array] id, date_creation, title, text, id_chapitre, slug, published
+ #}
 
- <h1>
- Ajouter un article
- </h1>
+<form method="post" action='post'>
 
-
-
-
-
-        <form method="post" action='post'>
-        
-            <div class="form-group row">
+    <div class="form-group row">
 
         <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default">Titre</span>
-        </div>
-        <input name="titre" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="{{article.titre}}" placeholder="titre du chapitre">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Titre</span>
+            </div>
+            <input name="title" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="{{article.title}}" placeholder="titre du chapitre">
         </div>
 
         <div class="input-group">
-        <div class="input-group-prepend">
-            <span class="input-group-text mb-3" id="">slug</span>
-        </div>
+            <div class="input-group-prepend">
+                <span class="input-group-text mb-3" id="">slug</span>
+            </div>
 
-        <input name ="slug" value="{{article.slug}}" type="text" class="form-control mb-3" placeholder=" titre visible dans l' url du chapitre">
+            <input name="slug" value="{{article.slug}}" type="text" class="form-control mb-3" placeholder=" titre visible dans l' url du chapitre">
 
             <div class="input-group-prepend ">
-            <span class="input-group-text mb-3"  id="">Numéro du chapitre</span>
+                <span class="input-group-text mb-3" id="">Numéro du chapitre</span>
+            </div>
+
+            <input name="id_chapitre" value="{{index_chapitre }}" type="number" class="form-control mb-3">
+
         </div>
 
-        <input  name ="chapitre" 
-        value="{{article.chapitre > 0 ? article.chapitre : index_chapitre }}" type="number" class="form-control mb-3">
-
-        </div>
-
-          <div class="form-check checkboxEditAdmin">
-            <input name ="published" type="checkbox" class="form-check-input" checked="checked" id="exampleCheck1">
+        <div class="form-check checkboxEditAdmin">
+            <input name="published" type="checkbox" class="form-check-input" checked="checked" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">publier tout de suite</label>
         </div>
 
         <br>
 
-{# zone de texte du wysiwyg #}
-        <textarea rows="15" name="texte">
+        {# zone de texte du wysiwyg #}
+        <textarea rows="15" name="text">
 
-        {{article.texte}}
+            {{article.text}}
         </textarea>
-{# zone de texte du wysiwyg #}
+        {# zone de texte du wysiwyg #}
 
-<br>
+        <br>
         <button type="enregistrer" class="btn btn-primary btn-editeur">enregistrer</button>
 
     </div>
@@ -79,5 +80,5 @@
 <br>
 
 {% include 'parts/sidenavfin.twig' %}
-{% include 'parts/footer.twig' %}
+{# {% include 'parts/footer.twig' %} #}
 {% include 'parts/endScript.twig' %}

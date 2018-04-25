@@ -9,7 +9,7 @@ namespace Models;
  * @category PHP
  * @package  Null
  * @author   Charroux Sam <charrouxsam@gmail.com>
- * @license  MIT https: //choosealicense.com/licenses/mit/ 
+ * @license  MIT https: //choosealicense.com/licenses/mit/
  */
 class Articles_model
 {
@@ -19,9 +19,9 @@ class Articles_model
 
     /**
      * Constructeur
-     * 
+     *
      * @param  null
-     * @return void
+     * @return object(Articles_model)
      */
     public function __construct()
     {
@@ -31,12 +31,12 @@ class Articles_model
 
     }
 
-        /**
-         * Recupere la liste de tout les articles et renvoie la totalité des données
-         *
-         * @param  null
-         * @return array(articles)
-         */
+    /**
+     * Recupere la liste de tout les articles et renvoie la totalité des données
+     *
+     * @param  null
+     * @return array(articles)
+     */
     public function getListeArticles()
     {
 
@@ -57,6 +57,8 @@ class Articles_model
  * selon un index et une limite en nombre
  * et renvoie la totalité des données
  *
+ * @param int index de la page
+ * @return array
  */
 
     public function getListeArticlesLimit($index)
@@ -65,9 +67,10 @@ class Articles_model
         $index = ($index - 1) * $this->_articleParPages;
 
         $billets = $this->_db->prepare(
-            "SELECT * from articles
-        ORDER BY id_chapitre
-        LIMIT $index, $this->_articleParPages"
+            "SELECT id, date_creation, title, text, id_chapitre, slug, published
+            FROM articles
+            ORDER BY id_chapitre
+            LIMIT $index, $this->_articleParPages"
         );
 
         $billets->execute();
@@ -86,7 +89,8 @@ class Articles_model
         $index = ($index - 1) * $this->_articleParPages;
 
         $billets = $this->_db->prepare(
-            "SELECT * from articles
+            "SELECT id, date_creation, title, text, id_chapitre, slug, published 
+            FROM articles
             WHERE published = 1
             ORDER BY id_chapitre
             LIMIT $index, $this->_articleParPages"
@@ -102,17 +106,22 @@ class Articles_model
 
     }
 
+
 /**
  * recupere un article grace au slug de l'url
- * renvoie la totalité des données de l'article
+ *
+ * @param [string] $slug
+ * @return [array] id, date_creation, title, text, id_chapitre, slug, published
  */
-
     public function getArticleBySlug($slug)
     {
 
         $slug = filter_var($slug, FILTER_SANITIZE_URL);
 
-        $billet = $this->_db->prepare('select * from articles WHERE slug=?');
+        $billet = $this->_db->prepare(
+            'SELECT id, date_creation, title, text, id_chapitre, slug, published
+            FROM articles 
+            WHERE slug=?');
 
         $billet->execute(array($slug));
 
@@ -128,7 +137,10 @@ class Articles_model
     public function getArticleById($idChapitre)
     {
 
-        $billet = $this->_db->prepare('select * from articles WHERE id_chapitre=?');
+        $billet = $this->_db->prepare(
+            'SELECT id, date_creation, title, text, id_chapitre, slug, published 
+            FROM articles 
+            WHERE id_chapitre=?');
 
         $billet->execute(array($idChapitre));
 
@@ -136,11 +148,12 @@ class Articles_model
 
     }
 
+
 /**
- * enregistrement d'un nouvel article dans la base de donnée
- * renvoie false si une erreur a été detecté ou
- *  si l'article n'est pas enregistré
+ * Enregistrement nouvel article
  *
+ * @param [array] $datas  {id, date_creation, title, text, id_chapitre, slug, published}
+ * @return bool
  */
     public function setArticle($datas)
     {
@@ -162,27 +175,26 @@ class Articles_model
             $published = 0;
         }
 
-        $title = $datas['titre'];
-        $text = $datas['texte'];
+        $title = $datas['title'];
+        $text = $datas['text'];
         $slug = preg_replace('`[^a-z0-9]+`', '-', $datas['slug']);
         $slug = trim($slug, '-');
-        $id_chapitre = $datas['chapitre'];
+        $id_chapitre = $datas['id_chapitre'];
 
         return $billet->execute();
 
     }
 
 /**
- *
  * mise a jour d'un article
  *
- *
+ * @param [array] $datas  {id, date_creation, title, text, id_chapitre, slug, published}
+ * @return bool
  */
-
     public function updateArticle($datas)
     {
 
-        $idChapitre = intval($datas['chapitre']);
+        $idChapitre = intval($datas['id_chapitre']);
 
         $billet = $this->_db->prepare(
             "UPDATE articles
@@ -202,8 +214,8 @@ class Articles_model
             $published = 0;
         }
 
-        $title = $datas['titre'];
-        $text = $datas['texte'];
+        $title = $datas['title'];
+        $text = $datas['text'];
         $slug = preg_replace('`[^a-z0-9]+`', '-', $datas['slug']);
         $slug = trim($slug, '-');
 
@@ -211,6 +223,12 @@ class Articles_model
 
     }
 
+    /**
+     * suppression d'un article
+     *
+     * @param [string] $slug
+     * @return bool
+     */
     public function DeletArticle($slug)
     {
 
@@ -242,8 +260,8 @@ class Articles_model
     {
 
         $test = $this->_db->query(
-            "SELECT COUNT(*) 
-            FROM articles 
+            "SELECT COUNT(*)
+            FROM articles
             WHERE published=true"
         );
         return $test->fetchColumn();

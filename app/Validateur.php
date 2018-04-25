@@ -1,17 +1,40 @@
 <?php
 namespace App;
 
+/**
+ * Valide les entrée des formulaires utilisateurs
+ *
+ * PHP version 7
+ *
+ * @category PHP
+ * @package  Null
+ * @author   Charroux Sam <charrouxsam@gmail.com>
+ * @license  MIT https: //choosealicense.com/licenses/mit/
+ */
+
+use Models\Articles_model;
+
 class Validateur
 {
 
     private $article_model;
 
+/**
+ * constructeur
+ * @param null
+ * @return object Validateur
+ */
     public function __construct()
     {
-
-        $this->article_model = new \Models\Articles_model();
+        $this->article_model = new Articles_model();
     }
 
+/**
+ * Nettoyage du slug
+ *
+ * @param [string] $slug
+ * @return [array] $datas
+ */
     public function formatSlug($slug)
     {
         if (!isset($slug)) {
@@ -23,6 +46,13 @@ class Validateur
         return $slug;
     }
 
+/**
+ * Verification validité du slug
+ *
+ * @param [array] $datas
+ * @param [string] $slug
+ * @return [array] $datas
+ */
     public function checkSlug($datas, $slug)
     {
 
@@ -32,7 +62,13 @@ class Validateur
         }
         return $datas;
     }
-
+/**
+ * Verification de l'existence du slug dans la bdd
+ *
+ * @param [array] $datas
+ * @param [string] $slug
+ * @return [array] $datas
+ */
     public function checkSlugExist($datas, $slug)
     {
 
@@ -43,7 +79,13 @@ class Validateur
         return $datas;
     }
 
-//verification de la validité de l'entier pour le numero de chapitre
+/**
+ * verification de la validité de l'entier pour le numero de chapitre
+ *
+ * @param [array] $datas
+ * @param [int] $id
+ * @return [array] $datas
+ */
     public function checkChapitreIdValid($datas, $id)
     {
 
@@ -54,7 +96,15 @@ class Validateur
         return $datas;
     }
 
-//verifier si le numero de chapitre n'existe pas deja dans la base.
+//
+
+/**
+ * verifier si le numero de chapitre n'existe pas deja dans la base.
+ *
+ * @param [array] $datas
+ * @param [int] $id
+ * @return [array] $datas
+ */
     public function checkChapitreIdExist($datas, $id)
     {
 
@@ -65,7 +115,13 @@ class Validateur
         return $datas;
     }
 
-// verification de la validité de la chaine du titre
+/**
+ * verification de la validité de la chaine du titre
+ *
+ * @param [array] $datas
+ * @param [string] $title
+ * @return [array] $datas
+ */
     public function checkTitre($datas, $title)
     {
 
@@ -76,6 +132,13 @@ class Validateur
         return $datas;
     }
 
+/**
+ * verification de la validité de la chaine du texte
+ *
+ * @param [array] $datas
+ * @param [string] $title
+ * @return [array] $datas
+ */
     public function checkTexte($datas, $text)
     {
         if (!$text != '') {
@@ -85,28 +148,39 @@ class Validateur
         return $datas;
     }
 
+/**
+ * verification de la validité d'un nouveau post
+ *
+ * @param [array] $post
+ * @param [string] $title
+ * @return [array] $datas
+ */
     public function validerPostArticle($post)
     {
-
         $post['messages'] = [];
         $post['checked'] = true;
-
         $post['slug'] = $this->formatSlug($post['slug']);
         $post = $this->checkSlug($post, $post['slug']);
         $post = $this->checkSlugExist($post, $post['slug']);
-        $post = $this->checkChapitreIdExist($post, $post['chapitre']);
-        $post = $this->checkChapitreIdValid($post, $post['chapitre']);
-        $post = $this->checkTitre($post, $post['titre']);
-        $post = $this->checkTexte($post, $post['texte']);
+        $post = $this->checkChapitreIdExist($post, $post['id_chapitre']);
+        $post = $this->checkChapitreIdValid($post, $post['id_chapitre']);
+        $post = $this->checkTitre($post, $post['title']);
+        $post = $this->checkTexte($post, $post['text']);
 
         return $validation = array(
-
             'checked' => $post['checked'],
             'messages' => $post['messages'],
             'post' => $post,
-
         );
     }
+
+/**
+ * verification de la validité d'une mise a jour de post
+ *
+ * @param [array] $post
+ * @param [string] $title
+ * @return [array] $datas
+ */
 
     public function validerUpdateArticle($post)
     {
@@ -116,9 +190,9 @@ class Validateur
 
         $post['slug'] = $this->formatSlug($post['slug']);
         $post = $this->checkSlug($post, $post['slug']);
-        $post = $this->checkChapitreIdValid($post, $post['chapitre']);
-        $post = $this->checkTitre($post, $post['titre']);
-        $post = $this->checkTexte($post, $post['texte']);
+        $post = $this->checkChapitreIdValid($post, $post['id_chapitre']);
+        $post = $this->checkTitre($post, $post['title']);
+        $post = $this->checkTexte($post, $post['text']);
 
         return $validation = array(
 
@@ -157,10 +231,12 @@ class Validateur
             $datas['checked'] = false;
 
         }
+        if (isset($_SESSION['comments'])) {
+            if (in_array($datas['id_chapitre'], $_SESSION['comments'])) {
+                $datas['messages']['comment'] = "vous avez deja commenté ce billet.";
+                $datas['checked'] = false;
 
-        if (in_array($datas['id_chapitre'], $_SESSION['comments'])) {
-            $datas['messages']['comment'] = "vous avez deja commenté ce billet.";
-            $datas['checked'] = false;
+            }
 
         }
 

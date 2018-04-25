@@ -1,94 +1,86 @@
 <?php
 namespace Routeurs;
 
+use Controllers\Admin_controller;
 
-class Admin_router{
+class Admin_router
+{
 
     private $Admin_controller;
 
+    public function __construct($twig)
+    {
 
-
-
-    public function __construct($twig){
-
-        $this->Admin_controller= new \Controllers\Admin_controller($twig);
+        $this->Admin_controller = new Admin_controller($twig);
 
     }
 
+    public function routerAdmin($params)
+    {
 
-
-    public function routerAdmin($params){
-
-
-        if( isset($params[0]) && $params[0] ==='admin' && !isset($params[1]) ){
+        if (isset($params[0]) && $params[0] === 'admin' && !isset($params[1])) {
 
             $this->Admin_controller->getAdmin();
 
-        }elseif(isset($params[1]) && $params[1] === 'articles' && isset($params[2])){
-         
+        } elseif (isset($params[1]) && $params[1] === 'articles' && isset($params[2])) {
 
             switch ($params[2]) {
 
                 case 'list':
-                $this->Admin_controller->getArticlesList($params);
+                    $this->Admin_controller->getArticlesList($params);
 
-                break;
+                    break;
 
                 case 'ajouter':
-                $this->Admin_controller->getEditeur();
+                    $this->Admin_controller->getEditeur();
 
-                break;
+                    break;
 
                 case 'post':
 
-                $this->Admin_controller->postArticle();
+                    $this->Admin_controller->postArticle();
 
-                break;
+                    break;
 
                 default:
-                $this->Admin_controller->getPage404();
+                    $this->Admin_controller->getPage404();
 
             }
 
-        }elseif(isset($params[1]) && $params[1] === 'article' && isset($params[2]) && isset($params[3])){
+        } elseif (isset($params[1]) && $params[1] === 'article' && isset($params[2]) && isset($params[3])) {
 
-             switch ($params[3]) {
+            switch ($params[3]) {
 
                 case 'edit':
-                $this->Admin_controller->editArticle($params);
+                    $this->Admin_controller->editArticle($params[2]);
 
-                break;
+                    break;
 
-                case 'update':
-                $this->Admin_controller->updateArticle($params);
+                case 'post':
+                    $this->Admin_controller->updateArticle($params);
 
-                break;
+                    break;
 
                 case 'view':
-                $this->Admin_controller->articlePreview($params);
+                    $this->Admin_controller->articlePreview($params);
 
-                break;
+                    break;
 
                 case 'delete':
 
-                $this->Admin_controller->DeletArticle($params);
+                    $this->Admin_controller->DeletArticle($params[2]);
 
-                break;
+                    break;
 
                 default:
-                $this->Admin_controller->getPage404();
+                    $this->Admin_controller->getPage404();
 
             }
 
-
-
-        }else{
+        } else {
             $this->Admin_controller->getPage404();
         }
 
     }
-
-
-
 
 }

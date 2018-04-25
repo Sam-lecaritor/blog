@@ -1,6 +1,8 @@
 <?php
 namespace Models;
 
+use App\Db_connect;
+
 /**
  * Gestion de la base de données des articles
  *
@@ -26,7 +28,7 @@ class Commentaires_model
     public function __construct()
     {
 
-        $db = new \App\Db_connect();
+        $db = new Db_connect();
         $this->_db = $db->connect();
 
     }
@@ -79,10 +81,48 @@ class Commentaires_model
 
     }
 
+    public function countAllComments($id)
+    {
+        $billets = $this->_db->prepare(
+            "SELECT COUNT(*)
+             FROM comments
+             WHERE id_chapitre= :id"
+        );
+
+        $billets->bindParam(':id', $id);
+        $billets->execute();
+
+        if ($billets) {
+            return $billets->fetch();
+        } else {
+            return null;
+        }
+
+    }
+
+    public function countReportedComments($id)
+    {
+        $billets = $this->_db->prepare(
+            "SELECT COUNT(*)
+             FROM comments
+             WHERE id_chapitre= :id and signalement = 1"
+        );
+
+        $billets->bindParam(':id', $id);
+        $billets->execute();
+
+        if ($billets) {
+            return $billets->fetch();
+        } else {
+            return null;
+        }
+
+    }
+    
+
     public function signalerComment($id)
     {
-        //$id = intval($id);
-        d($id);
+
         $billet = $this->_db->prepare(
             "UPDATE comments
             SET signalement = 1
@@ -95,23 +135,4 @@ class Commentaires_model
 
     }
 
-    public function countAllComments($id)
-    {
-        $billets = $this->_db->prepare(
-            "SELECT COUNT(*)
-             FROM comments
-             WHERE id_chapitre= :id"
-        );
-
-        $billets->bindParam(':id', $id);
-
-        $billets->execute();
-
-        if ($billets) {
-            return $billets->fetch();
-        } else {
-            return null;
-        }
-
-    }
 }

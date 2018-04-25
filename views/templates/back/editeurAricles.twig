@@ -38,21 +38,21 @@ article == [array] id, date_creation, title, text, id_chapitre, slug, published
             <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-default">Titre</span>
             </div>
-            <input name="title" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="{{article.title}}" placeholder="titre du chapitre">
+            <input required="required" name="title" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="{{article.title}}" placeholder="titre du chapitre">
         </div>
 
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text mb-3" id="">slug</span>
+                <span class="input-group-text mb-3">slug</span>
             </div>
 
-            <input name="slug" value="{{article.slug}}" type="text" class="form-control mb-3" placeholder=" titre visible dans l' url du chapitre">
+            <input required="required" name="slug" value="{{article.slug}}" type="text" class="form-control mb-3" placeholder=" titre visible dans l' url du chapitre">
 
             <div class="input-group-prepend ">
-                <span class="input-group-text mb-3" id="">Numéro du chapitre</span>
+                <span class="input-group-text mb-3">Numéro du chapitre</span>
             </div>
 
-            <input name="id_chapitre" value="{{index_chapitre }}" type="number" class="form-control mb-3">
+            <input required="required" name="id_chapitre" value="{{index_chapitre }}" type="number" class="form-control mb-3">
 
         </div>
 
@@ -64,20 +64,23 @@ article == [array] id, date_creation, title, text, id_chapitre, slug, published
         <br>
 
         {# zone de texte du wysiwyg #}
-        <textarea rows="15" name="text">
+        <textarea required="required" rows="15" name="text">
 
             {{article.text}}
         </textarea>
         {# zone de texte du wysiwyg #}
 
         <br>
-        <button type="enregistrer" class="btn btn-primary btn-editeur">enregistrer</button>
+        <button type="button" class="btn btn-primary btn-editeur">enregistrer</button>
 
     </div>
 
 </form>
 
 <br>
+
+{# fermeture du contenu a supprimer si le footer est ajouté #}
+</div>
 
 {% include 'parts/sidenavfin.twig' %}
 {# {% include 'parts/footer.twig' %} #}

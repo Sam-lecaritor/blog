@@ -56,7 +56,7 @@ class Validateur
     public function checkSlug($datas, $slug)
     {
 
-        if ($slug === '') {
+        if (strlen($slug) < 1) {
             $datas['messages']['slug'] = 'le slug  doit etre renseigné';
             $datas['checked'] = false;
         }
@@ -185,8 +185,8 @@ class Validateur
     public function validerUpdateArticle($post)
     {
 
-        $datas['messages'] = [];
-        $datas['checked'] = true;
+        $post['messages'] = [];
+        $post['checked'] = true;
 
         $post['slug'] = $this->formatSlug($post['slug']);
         $post = $this->checkSlug($post, $post['slug']);
@@ -196,8 +196,8 @@ class Validateur
 
         return $validation = array(
 
-            'checked' => $datas['checked'],
-            'messages' => $datas['messages'],
+            'checked' => $post['checked'],
+            'messages' => $post['messages'],
             'post' => $post,
         );
 

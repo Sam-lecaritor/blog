@@ -72,7 +72,6 @@ class Admin_controller
             $value['reported'] = $reported[0];
         }
 
-
         echo $this->template->render('back/articles.twig', array(
             'articles' => $articles,
             'page_title' => 'liste des articles',
@@ -110,9 +109,7 @@ class Admin_controller
 
     public function postArticle()
     {
-
         if (isset($_POST)) {
-
             $validateur = $this->validateur->validerPostArticle($_POST);
 
             if ($validateur['checked'] === true) {
@@ -120,7 +117,6 @@ class Admin_controller
 
                 if (isset($req) && $req != false) {
                     //post reussi, enregistrement effectué
-
                     header('Location: /blog/admin');
                     exit();
                 } else {
@@ -130,7 +126,6 @@ class Admin_controller
                 }
             } else {
                 //ici le rendu avec messages d'erreurs
-
                 $this->getPageEditeur('poster article', $_POST, $validateur['messages'], $validateur['post']['id_chapitre']);
             }
 
@@ -163,32 +158,24 @@ class Admin_controller
 
         if (isset($params[3]) && $params[3] === "post") {
             if (isset($_POST)) {
-
                 $validateur = $this->validateur->validerUpdateArticle($_POST);
                 if ($validateur['checked'] === true) {
                     $req = $this->article_model->updateArticle($_POST);
                     if (isset($req) && $req != false) {
-
                         header('Location: /blog/admin/articles/list/');
                         exit();
 
                     } else {
-
                         $this->getPageEditeur('update article', $_POST, null, $_POST['id_chapitre']);
-
                     }
 
                 } else {
-
                     $this->getPageEditeur('update article', $_POST, $validateur['messages'], $_POST['id_chapitre']);
-
                 }
 
             } else {
-
                 $this->getPage404();
             }
-
         }
     }
 

@@ -1,10 +1,19 @@
 {% include 'parts/header.twig' %}
 {% include 'parts/navbar.twig' %}
 
-<h1>
-    les chapitres du livres
+<h1 class="text-center">
+    les chapitres du livre
 
 </h1>
+
+{% if nbr_pages > 1 %}
+    <h2 class="text-center">
+        page
+        {{index_page}}
+        sur
+        {{nbr_pages}}.
+    </h2>
+{% endif %}
 
 <div class="row container-fluid padding-left padding-top">
 

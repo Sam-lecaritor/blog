@@ -2,90 +2,82 @@
 {% include 'parts/navbar.twig' %}
 {% include 'parts/sidenavdebut.twig' %}
 
-
-
-
 <div class="container-fluid text-right">
 
-    <a href="/blog/admin/articles/ajouter" class="btn btn-lg btn-warning" >ajouter un article</a>
+    <a href="/blog/admin/articles/ajouter" class="btn btn-lg btn-warning">ajouter un article</a>
 </div>
 
-
 <div class="row container-fluid padding-left padding-top ">
-        
-        {% for item in articles %}
+
+    {% for item in articles %}
 
         <div class="col-xs-6 ">
 
-            <div class="card" >
+            <div class="card">
                 <div class="card-body">
-                <a href="/blog/chapitre/{{ item.slug }}">
+                    <a href="/blog/chapitre/{{ item.slug }}">
 
-                    <h5 class="card-title"> {{ item.title }}</h5>
+                        <h5 class="card-title">
+                            {{ item.title }}</h5>
 
-                    <h6 class="card-subtitle mb-2 text-muted">chapitre numero :  {{ item.id_chapitre}}</h6>
-                 </a>
+                        <h6 class="card-subtitle mb-2 text-muted">chapitre numero :
+                            {{ item.id_chapitre}}</h6>
+                    </a>
 
                     <p>
-                     publié
-            {% if item.published > 0 %}
-                    <span class="badge badge-primary badge-pill">oui</span>
-            {% endif %}
+                        publié
+                        {% if item.published > 0 %}
+                            <span class="badge badge-primary badge-pill">oui</span>
+                        {% endif %}
 
-            {% if item.published < 1  %}
-                    <span class="badge badge-warning badge-pill">non</span>
-            {% endif %} 
+                        {% if item.published < 1 %}
+                            <span class="badge badge-warning badge-pill">non</span>
+                        {% endif %}
 
-                  </p>
+                    </p>
 
-                 <hr>
-{# 
-                <p>Apperçu : </p>
-                    {% autoescape %}
-                    <p class="card-text"> {{ item.text[:140]|striptags|raw }} ....</p>
-                    {% endautoescape %}
-
-
-                <hr> #}
-                <div class="row container">
-
-                    <div class="col-md-6 col-md-offset-1 ">
-                        <p>
-                        commentaires
-                        <span class="badge badge-primary badge-pill">{{item.comments}} </span>
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>
-                        signalements
-                        <span class="badge badge-primary badge-pill">{{item.reported}}</span>
-                        </p>
-                    </div> 
                     <hr>
-                    <div class="col-md-6 col-md-offset-1 ">
-                        <a href="/blog/admin/article/{{item.slug}}/edit" class="btn btn-sm btn-success" role="button">éditer</a>
-                    </div>
-                    <div class="col-md-6">
-                        <a href="/blog/admin/article/{{item.slug}}/delete" class="btn btn-sm btn-danger" role="button">supprimer</a>
+
+                    <div class="row container">
+
+                        <div class="col-md-6 col-md-offset-1 ">
+                            <p>
+                                commentaires
+                                <span class="badge badge-primary badge-pill">{{item.comments}}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                signalements
+                                <span class="badge badge-primary badge-pill">{{item.reported}}</span>
+                            </p>
+                        </div>
+                        <hr>
+                        <div class="col-md-6 col-md-offset-1 ">
+                            <a href="/blog/admin/article/{{item.slug}}/edit" class="btn btn-sm btn-success" role="button">éditer</a>
+                        </div>
+                        <div class="col-md-6">
+
+                            <button class="btn btn-sm btn-danger" onclick="Confirmation( '{{item.slug}}', '{{item.title}}' )">
+                                supprimer
+                            </button>
+
+                        </div>
                     </div>
                 </div>
             </div>
-
-
-
-
-        </div> 
-    </div> 
-
-
-        {% endfor %}
         </div>
-<br>
-<br>
 
+    {% endfor %}
+</div>
+<br>
+<br>
+{# fermeture du contenu a supprimer si le footer est ajouté #}
+</div>
+<script src="/blog/includes/js/confirm.js"></script>
 
 {% include 'parts/paginateArticlesAdmin.twig' %}
-{% include 'parts/footer.twig' %}
+{# {% include 'parts/footer.twig' %} #}
 {% include 'parts/sidenavfin.twig' %}
-
 {% include 'parts/endScript.twig' %}

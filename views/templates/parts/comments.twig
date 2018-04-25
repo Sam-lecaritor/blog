@@ -51,7 +51,7 @@
 
 <div class="container article">
 
-    <ul class="list-comments">
+    <div class="list-comments">
         <p class="btn-modal">
             <button type="button" class="btn btn-primary btn-modal" data-toggle="modal" data-target="#exampleModal">
                 commenter
@@ -64,13 +64,13 @@
         {% for item in comments %}
 
             <hr>
-            <li class="media">
+            <div class="media">
                 <div class="media mb-4">
 
                     {% if item.approuved < 1 %}
 
                         {% if item.signalement < 1 %}
-                            <form method="post" action="">
+                            <form method="post" action="/blog/chapitre/{{article.slug}}">
                                 <input name='signalement' type="hidden" value="{{item.id}}">
                                 <button type="submit" class="btn btn-outline-danger btn-signalement">signaler</button>
                             </form>
@@ -100,10 +100,10 @@
 
                     </div>
                 </div>
-            </li>
+            </div>
 
         {% endfor %}
 
-    </ul>
+    </div>
 
 </div>

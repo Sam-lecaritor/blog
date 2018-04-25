@@ -4,7 +4,6 @@ require 'app/bootstrap.php';
 
 
 if(isset($_GET['url'])){
-
     $urlarray = explode('/', $_GET['url']);
 
 }else{

@@ -1,0 +1,30 @@
+RewriteEngine on
+
+
+
+RewriteEngine on
+
+# Ensuite, vérifions que nous sommes bien sur 
+# monsite1.fr ou www.monsite1.fr
+# et dans le sous-dossier voulu.
+RewriteCond %{HTTP_HOST} ^(www.)?monsite1.fr$
+RewriteCond %{REQUEST_URI} !^/blog/
+
+# Vérifions si la personne a tapé le nom d'un
+# fichier ou dossier existant (dans ce cas, nous
+# ne voulons pas ré-écrire la requête...)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Maintenant que toutes les conditions ont été
+# rencontrées, on redirige vers le bon sous-dossier
+RewriteRule ^(.*)$ /blog/$1
+
+# Finalement, on vérifie si la personne n'a seulement
+# tapé que le nom de domaine (avec ou sans www) sans
+# rien mettre après la barre oblique (/). Si oui, on redirige
+# vers le bon sous-dossier, sur le fichier principal...
+# (notez que le fichier pourrait être autre chose, tel que
+# index.php, autrefichier.html, quelquechose.php...)
+RewriteCond %{HTTP_HOST} ^(www.)?monsite1.fr$
+RewriteRule ^(/)?$ /blog/Home [L]

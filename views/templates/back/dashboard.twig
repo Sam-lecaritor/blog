@@ -15,11 +15,12 @@
 
         <div class="card" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+                <h5 class="card-title">commentaires</h5>
+                <h6 class="card-subtitle mb-2 text-muted">recapitulatif</h6>
+                <p class="card-text">il y a XX commentaires au total dont XX signalés</p>
+
+                <a href="#" class="card-link">les commentaires</a>
+                <a href="#" class="card-link">les signalements</a>
             </div>
         </div>
     </div>
@@ -28,29 +29,17 @@
 
         <div class="card" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
+                <h5 class="card-title">articles</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-            </div>
-        </div>
-    </div>
-    {# une autre card #}
-    <div class="col-xs-6 ">
-
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+                <p class="card-text">Vous avez rédigé XX articles, le plus commenté est le chapitre XX</p>
+                <a href="/blog/admin/articles/ajouter" class="card-link">Éditeur</a>
+                <a href="/blog/admin/articles/list" class="card-link">Les articles</a>
             </div>
         </div>
     </div>
 
 </div>
+{# fermeture du contenu a supprimer si le footer est ajouté #}
 </div>
 {% include 'parts/sidenavfin.twig' %}
 {# {% include 'parts/footer.twig' %} #}

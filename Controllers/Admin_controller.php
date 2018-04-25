@@ -200,20 +200,16 @@ class Admin_controller
         }
     }
 
-    public function getNewComments()
+    public function getCommentspage()
     {
+echo $this->template->render('back/comments.twig', array(
+    'page_title' => 'moderation commentaires',
+
+));
 
     }
 
-    public function getApprouvedComments()
-    {
-
-    }
-
-    public function getReportedComments()
-    {
-
-    }
+   
 
 /**
  * Envoie de la page editeur

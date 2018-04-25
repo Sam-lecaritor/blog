@@ -22,6 +22,31 @@ class Admin_router
 
             $this->Admin_controller->getAdmin();
 
+        } elseif (isset($params[1]) && $params[1] === 'comments') {
+
+            if (!isset($params[2])) {
+                $this->Admin_controller->getCommentspage();
+
+            } else {
+                switch ($params[2]) {
+
+                    case 'approuved':
+                       
+                        break;
+
+                    case 'news':
+                      
+
+                        break;
+                    case 'reported':
+                      
+
+                        break;
+                    default:
+                        $this->Admin_controller->getPage404();
+                }
+            }
+
         } elseif (isset($params[1]) && $params[1] === 'articles' && isset($params[2])) {
 
             switch ($params[2]) {

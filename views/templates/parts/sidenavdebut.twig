@@ -1,36 +1,47 @@
-
 <div id="wrapper" class="">
-
 
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
-{#             <li class="sidebar-brand">
+            {#             <li class="sidebar-brand">
                 <a href="#">
                     Start Bootstrap
                 </a>
             </li> #}
             <li>
-                <a href="/blog/admin">tableau de bord</a>
+                <a href="/blog/admin">Tableau de bord</a>
             </li>
             <li>
                 <a href="/blog/admin/articles/list">Articles</a>
             </li>
             <li>
+                <ul>
+                    <li>
+<a href="/blog/admin/articles/ajouter">rediger un article</a>
+                    </li>
+
+                </ul>
+            </li>
+            <li>
                 <a href="/blog/admin/comments">Commentaires</a>
             </li>
             <li>
-                <a href="/blog/admin/signalements">signalements</a>
+                <ul>
+                    <li>
+                        <a href="/blog/admin/news">Nouveaux</a>
+                    </li>
+                    <li>
+                        <a href="/blog/admin/reported">Signalés</a>
+                    </li>
+
+                    <li>
+                        <a href="/blog/admin/approuved">Vérifiés</a>
+                    </li>
+                </ul>
+
             </li>
-{#             <li>
-                <a href="#">About</a>
-            </li>
-            <li>
-                <a href="#">Services</a>
-            </li>
-            <li>
-                <a href="#">Contact</a>
-            </li> #}
+
         </ul>
+
     </div>
     <!-- /#sidebar-wrapper -->
 
@@ -41,6 +52,5 @@
             <a href="#menu-toggle" class="btn btn-lg btn-outline-success" id="menu-toggle">menu latteral</a>
         </div>
 
-<br>
-    <div class="container"> 
-  
+        <br>
+        <div class="container">

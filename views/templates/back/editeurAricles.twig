@@ -2,9 +2,25 @@
 {% include 'parts/navbar.twig' %}
 {% include 'parts/sidenavdebut.twig' %}
 
+{# <script src="/blog/includes/js/tinymce/jquery.tinymce.min.js"></script>
+<script src="/blog/includes/js/tinymce/tinymce.min.js"></script> #}
+
 <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
 <script>
-    tinymce.init({selector: 'textarea'});
+    tinymce.init({
+        selector: "textarea",
+        themes: "modern",
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste",
+            "image imagetools",
+            "wordcount visualchars insertdatetime media nonbreaking",
+            "save table contextmenu directionality emoticons template paste textcolor"
+        ],
+        toolbar: " insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image| print preview media  image | forecolor backcolor emoticons",
+        extended_valid_elements: "+iframe[src|width|height|name|align|class]"
+    });
 </script>
 
 {# 
@@ -40,48 +56,34 @@ article == [array] id, date_creation, title, text, id_chapitre, slug, published
             </div>
             <input required="required" name="title" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="{{article.title}}" placeholder="titre du chapitre">
         </div>
-
         <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text mb-3">slug</span>
             </div>
-
             <input required="required" name="slug" value="{{article.slug}}" type="text" class="form-control mb-3" placeholder=" titre visible dans l' url du chapitre">
-
             <div class="input-group-prepend ">
                 <span class="input-group-text mb-3">Numéro du chapitre</span>
             </div>
-
             <input required="required" name="id_chapitre" value="{{index_chapitre }}" type="number" class="form-control mb-3">
-
         </div>
-
         <div class="form-check checkboxEditAdmin">
             <input name="published" type="checkbox" class="form-check-input" checked="checked" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">publier tout de suite</label>
         </div>
-
         <br>
-
         {# zone de texte du wysiwyg #}
         <textarea required="required" rows="15" name="text">
-
             {{article.text}}
         </textarea>
         {# zone de texte du wysiwyg #}
-
         <br>
-        <button type="button" class="btn btn-primary btn-editeur">enregistrer</button>
-
+        <button type="submit" class="btn btn-primary btn-editeur">enregistrer</button>
     </div>
-
 </form>
-
 <br>
 
 {# fermeture du contenu a supprimer si le footer est ajouté #}
 </div>
-
 {% include 'parts/sidenavfin.twig' %}
 {# {% include 'parts/footer.twig' %} #}
 {% include 'parts/endScript.twig' %}

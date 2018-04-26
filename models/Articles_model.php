@@ -1,6 +1,8 @@
 <?php
 namespace Models;
 
+use App\Db_connect;
+
 /**
  * Gestion de la base de données des articles
  *
@@ -26,7 +28,7 @@ class Articles_model
     public function __construct()
     {
 
-        $db = new \App\Db_connect();
+        $db = new Db_connect();
         $this->_db = $db->connect();
 
     }

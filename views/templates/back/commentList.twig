@@ -1,0 +1,93 @@
+{% include 'parts/header.twig' %}
+{% include 'parts/navbar.twig' %}
+{% include 'parts/sidenavdebut.twig' %}
+
+<h1 class="text-center">
+    Commentaires
+    {{page}}
+</h1>
+
+<br>
+
+<div class="row container-fluid padding-left padding-top ">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="td-infos" scope="col">Id chapitre</th>
+                <th class="td-infos" scope="col">Date</th>
+                <th class="td-infos" scope="col">Pseudo</th>
+                <th scope="col">Texte</th>
+                <th scope="col">Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            {# debut tableau #}
+            {% for item in comments %}
+                <tr>
+                    <th class="td-infos" scope="row">{{item.id_chapitre}}</th>
+
+                    <td class="td-infos">{{item.date_creation}}</td>
+
+                    <td class="td-infos">{{item.pseudo}}</td>
+                    <td>{{item.content|raw}}</td>
+                    <td>
+                        <div class="row container">
+                            <div class="col-xs-6">
+                                <button class="btn btn-sm btn-success btn-table" onclick="confirmCheckComment( '{{item.id}}', '{{item.pseudo}}', '{{link}}', '{{index_page}}' )">
+                                    Approuver
+                                </button>
+                            </div>
+                            <div class="col-xs-6">
+
+                                <button class="btn btn-sm btn-danger btn-table" onclick="confirmDeleteComment( '{{item.id}}', '{{item.pseudo}}', '{{link}}', '{{index_page}}' )">
+                                    Supprimer
+                                </button>
+
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+                {# fin tableau #}
+
+                {#             <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td>
+                    <div class="row container">
+                        <div class="col-md-6">
+                            <button class="btn btn-sm btn-success" onclick="Confirmation( '{{item.slug}}', '{{item.title}}' )">
+                                Approuver
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+
+                            <button class="btn btn-sm btn-danger" onclick="Confirmation( '{{item.slug}}', '{{item.title}}' )">
+                                Supprimer
+                            </button>
+
+                        </div>
+                    </div>
+                </td>
+
+            </tr> #}
+                {# fin tableau #}
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{# fermeture du contenu a supprimer si le footer est ajouté #}
+</div>
+
+<script src="/blog/includes/js/confirm.js"></script>
+{% include 'parts/paginationCommentsAdmin.twig' %}
+{% include 'parts/sidenavfin.twig' %}
+{# {% include 'parts/footer.twig' %} #}
+{% include 'parts/endScript.twig' %}

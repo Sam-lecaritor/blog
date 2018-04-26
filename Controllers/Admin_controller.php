@@ -200,16 +200,80 @@ class Admin_controller
         }
     }
 
-    public function getCommentspage()
+    public function getCommentspage($params = null)
     {
-echo $this->template->render('back/comments.twig', array(
-    'page_title' => 'moderation commentaires',
 
-));
+        $comments['reported'] = $this->Comment_model->countAllReportedComments()[0];
+        $comments['checked'] = $this->Comment_model->countAllcheckedComments()[0];
+
+        $comments['news'] = $this->Comment_model->countAllNewComments()[0];
+
+        echo $this->template->render('back/comments.twig', array(
+            'page_title' => 'moderation commentaires',
+            'comments' => $comments,
+
+        ));
 
     }
 
-   
+    public function getCommentList($params)
+    {
+
+        if ($params[2] === 'reported') {
+            $page = 'signalés';
+            $nbr_pages = $this->Comment_model->countPagesReportedComments();
+
+            if (!isset($params[3]) || $params[3] < 1) {
+
+                $comments = $this->Comment_model->getReportedCommentsLimit(1);
+                $params[3] = 1;
+
+            } else {
+                $comments = $this->Comment_model->getReportedCommentsLimit(intval($params[3]));
+            }
+
+        } elseif ($params[2] === 'news') {
+
+            $page = 'non lus';
+
+            $nbr_pages = $this->Comment_model->countPagesNewComments();
+
+            if (!isset($params[3]) || $params[3] < 1) {
+
+                $comments = $this->Comment_model->getNewCommentsLimit(1);
+                $params[3] = 1;
+
+            } else {
+                $comments = $this->Comment_model->getNewCommentsLimit(intval($params[3]));
+            }
+
+        } elseif ($params[2] === 'approuved') {
+            $page = 'approuvés';
+
+            $nbr_pages = $this->Comment_model->countPagescheckedComments();
+
+            if (!isset($params[3]) || $params[3] < 1) {
+
+                $comments = $this->Comment_model->getcheckedCommentsLimit(1);
+                $params[3] = 1;
+
+            } else {
+                $comments = $this->Comment_model->getcheckedCommentsLimit(intval($params[3]));
+            }
+
+        }
+
+        echo $this->template->render('back/commentList.twig', array(
+            'page_title' => 'moderation commentaires',
+            'page' => $page,
+            'comments' => $comments,
+            'index_page' => intval($params[3]),
+            'nbr_pages' => $nbr_pages,
+            'link' => $params[2],
+
+        ));
+
+    }
 
 /**
  * Envoie de la page editeur
@@ -228,6 +292,39 @@ echo $this->template->render('back/comments.twig', array(
             'article' => $article,
             'index_chapitre' => $index_chapitre,
         ));
+    }
+
+    public function checkComment($params)
+    {
+
+        $req = $this->Comment_model->checkComment($params[3]);
+
+        if ($req) {
+            $url = '/blog/admin/comments/' . $params[4] . '/' . $params[5];
+            header('Location: ' . $url);
+            exit();
+
+        } else {
+
+            //envoyer une erreur
+        }
+
+    }
+
+    public function deleteComment($params)
+    {
+        $req = $this->Comment_model->deleteComment($params[3]);
+
+        if ($req) {
+            $url = '/blog/admin/comments/' . $params[4] . '/' . $params[5];
+            header('Location: ' . $url);
+            exit();
+
+        } else {
+
+            //envoyer une erreur
+        }
+
     }
 
 /**

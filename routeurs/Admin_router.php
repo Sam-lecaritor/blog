@@ -31,17 +31,26 @@ class Admin_router
                 switch ($params[2]) {
 
                     case 'approuved':
-                       
+                        $this->Admin_controller->getCommentList($params);
                         break;
 
                     case 'news':
-                      
+                        $this->Admin_controller->getCommentList($params);
 
                         break;
                     case 'reported':
-                      
+                        $this->Admin_controller->getCommentList($params);
 
                         break;
+                    case 'checked':
+                        $this->Admin_controller->checkComment($params);
+                        break;
+                    case 'delete':
+
+                        $this->Admin_controller->deleteComment($params);
+
+                        break;
+
                     default:
                         $this->Admin_controller->getPage404();
                 }

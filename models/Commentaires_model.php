@@ -18,7 +18,7 @@ class Commentaires_model
 {
 
     private $_db;
-
+    private $_commentsParPages = 50;
     /**
      * Constructeur
      *
@@ -118,7 +118,177 @@ class Commentaires_model
         }
 
     }
-    
+    public function countAllReportedComments()
+    {
+        $billets = $this->_db->prepare(
+            "SELECT COUNT(*)
+             FROM comments
+             WHERE approuved = 0 and signalement = 1"
+        );
+
+        $billets->bindParam(':id', $id);
+        $billets->execute();
+
+        if ($billets) {
+            return $billets->fetch();
+        } else {
+            return null;
+        }
+
+    }
+
+    public function countAllNewComments()
+    {
+        $billets = $this->_db->prepare(
+            "SELECT COUNT(*)
+             FROM comments
+             WHERE approuved = 0 and signalement = 0"
+        );
+
+        $billets->bindParam(':id', $id);
+        $billets->execute();
+
+        if ($billets) {
+            return $billets->fetch();
+        } else {
+            return null;
+        }
+
+    }
+
+    public function countAllcheckedComments()
+    {
+        $billets = $this->_db->prepare(
+            "SELECT COUNT(*)
+             FROM comments
+             WHERE approuved = 1"
+        );
+
+        $billets->bindParam(':id', $id);
+        $billets->execute();
+
+        if ($billets) {
+            return $billets->fetch();
+        } else {
+            return null;
+        }
+
+    }
+
+    public function getReportedCommentsLimit($index)
+    {
+        $index = ($index - 1) * $this->_commentsParPages;
+
+        $billets = $this->_db->prepare(
+            "SELECT id, pseudo, content, date_creation, id_chapitre
+             FROM comments
+             WHERE signalement = 1
+             AND approuved = 0
+             LIMIT $index, $this->_commentsParPages"
+        );
+
+        $billets->execute();
+        if ($billets) {
+            return $billets->fetchall($this->_db::FETCH_ASSOC);
+
+        } else {
+            return null;
+        }
+    }
+
+    public function getNewCommentsLimit($index)
+    {
+        $index = ($index - 1) * $this->_commentsParPages;
+
+        $billets = $this->_db->prepare(
+            "SELECT id, pseudo, content, date_creation, id_chapitre
+             FROM comments
+             WHERE signalement = 0
+             AND approuved = 0
+             LIMIT $index, $this->_commentsParPages"
+        );
+
+        $billets->execute();
+        if ($billets) {
+            return $billets->fetchall($this->_db::FETCH_ASSOC);
+
+        } else {
+            return null;
+        }
+    }
+
+    public function getcheckedCommentsLimit($index)
+    {
+        $index = ($index - 1) * $this->_commentsParPages;
+
+        $billets = $this->_db->prepare(
+            "SELECT id, pseudo, content, date_creation, id_chapitre
+             FROM comments
+             WHERE approuved = 1
+             LIMIT $index, $this->_commentsParPages"
+        );
+
+        $billets->execute();
+        if ($billets) {
+            return $billets->fetchall($this->_db::FETCH_ASSOC);
+
+        } else {
+            return null;
+        }
+    }
+
+    public function countPagesReportedComments()
+    {
+
+        return ceil(intval($this->countAllReportedComments()[0]) / $this->_commentsParPages);
+
+    }
+
+    public function countPagesNewComments()
+    {
+
+        return ceil(intval($this->countAllNewComments()[0]) / $this->_commentsParPages);
+
+    }
+
+    public function countPagescheckedComments()
+    {
+
+        return ceil(intval($this->countAllcheckedComments()[0]) / $this->_commentsParPages);
+
+    }
+
+    public function deleteComment($id)
+    {
+
+        $billet = $this->_db->prepare(
+            "DELETE FROM comments
+            WHERE id= :id
+            LIMIT 1"
+        );
+
+        $billet->bindParam(':id', $id);
+        return $billet->execute();
+
+    }
+
+
+    public function checkComment($id)
+    {
+
+        $billet = $this->_db->prepare(
+            "UPDATE comments
+            SET approuved = 1
+            WHERE id= :id
+            LIMIT 1"
+        );
+
+        $billet->bindParam(':id', $id);
+        return $billet->execute();
+
+    }
+
+
 
     public function signalerComment($id)
     {

@@ -3,23 +3,103 @@
 {% include 'parts/sidenavdebut.twig' %}
 
 <h1 class="text-center">
-    tableau de bord
+    Vue d'ensemble commentaires
 </h1>
 
 <br>
 
 <div class="row container-fluid padding-left padding-top ">
 
-<div class="card">
-    <h5 class="card-header">Featured</h5>
-    <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+    {# une card #}
+    {#     <div class="col-xs-6 ">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Paramètres commentaires</h5>
+                <hr>
+                <h6 class="card-subtitle mb-2 text-muted">Les commentaires sont activés</h6>
+                <p class="card-text"></p>
+                <hr>
+                <div class="row container">
+                    <div class="col-md-6">
+                        <button class="btn btn-sm btn-success" onclick="Confirmation( '{{item.slug}}', '{{item.title}}' )">
+                            Activer
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+
+                        <button class="btn btn-sm btn-danger" onclick="Confirmation( '{{item.slug}}', '{{item.title}}' )">
+                            Désactiver
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div> #}
+
+    {# une autre card #}
+    <div class="col-xs-6 ">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Commentaires non lus</h5>
+                <hr>
+                <h6 class="card-subtitle mb-2 text-muted">il y a
+                    {{comments.news}}
+                    commentaires encore non-approuvés</h6>
+                <p class="card-text"></p>
+                <hr>
+                <div class="row container  padding-top ">
+                    <a href="/blog/admin/comments/news" class="card-link">Voir les commentaires</a>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+    {# une card #}
+    <div class="col-xs-6 ">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Commentaires signalés</h5>
+                <hr>
+                <h6 class="card-subtitle mb-2 text-muted">il y a
+                    {{comments.reported}}
+                    commentaires signalés</h6>
+                <p class="card-text"></p>
+                <hr>
+                <div class="row container  padding-top ">
+                    <a href="/blog/admin/comments/reported" class="card-link">Voir les commentaires</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {# une autre card #}
+    <div class="col-xs-6 ">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Commentaires lus</h5>
+                <hr>
+                <h6 class="card-subtitle mb-2 text-muted">il y a
+                    {{comments.checked}}
+                    commentaires approuvés</h6>
+                <p class="card-text"></p>
+                <hr>
+                <div class="row container  padding-top ">
+                    <a href="/blog/admin/comments/approuved" class="card-link">Voir les commentaires</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 </div>
+
 {# fermeture du contenu a supprimer si le footer est ajouté #}
 </div>
 {% include 'parts/sidenavfin.twig' %}

@@ -33,7 +33,8 @@ body {
     min-height: 250px;
 }
 
-h1,h2,
+h1,
+h2,
 .img {
     padding: 20px;
 }
@@ -133,14 +134,14 @@ h1,h2,
     text-align: right;
     font-size: 0.75em;
     color: rgb(35, 35, 41);
- 
     text-decoration: underline;
 }
 
 .comments-form {
     margin: auto;
 }
-.modal-content{
+
+.modal-content {
     margin-top: 150px;
 }
 
@@ -148,12 +149,34 @@ h1,h2,
     color: black;
     font-size: .9em;
 }
-.media-body>p{
+
+.media-body>p {
     color: black;
     font-size: 1em;
 }
-.btn-signalement{
+
+.btn-signalement {
     font-size: .7em;
     margin-right: 20px;
 }
 
+td,
+.media-body>p {
+    word-break: break-all;
+}
+
+.btn-table {
+    margin: 4px;
+}
+.navbar-toggler{
+    background-color: rgba(255, 255, 255, 0.959);
+}
+
+/* debut des media queries */
+
+@media screen and (max-width: 768px) {
+    .td-infos {
+        display: none;
+    }
+ 
+}

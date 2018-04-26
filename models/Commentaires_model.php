@@ -100,6 +100,22 @@ class Commentaires_model
 
     }
 
+    public function countTotalComments()
+    {
+        $billets = $this->_db->prepare(
+            "SELECT COUNT(*)
+             FROM comments"
+        );
+        $billets->execute();
+
+        if ($billets) {
+            return $billets->fetchColumn();
+        } else {
+            return null;
+        }
+
+    }
+
     public function countReportedComments($id)
     {
         $billets = $this->_db->prepare(
@@ -272,7 +288,6 @@ class Commentaires_model
 
     }
 
-
     public function checkComment($id)
     {
 
@@ -288,8 +303,6 @@ class Commentaires_model
 
     }
 
-
-
     public function signalerComment($id)
     {
 
@@ -302,6 +315,27 @@ class Commentaires_model
 
         $billet->bindParam(':id', $id);
         return $billet->execute();
+
+    }
+
+    public function getMostComment()
+    {
+        $billets = $this->_db->prepare(
+            "SELECT COUNT(id), id_chapitre
+            FROM comments
+            GROUP BY id_chapitre
+            HAVING COUNT(id) > 0
+            ORDER BY COUNT(id) DESC;"
+
+        );
+
+        $billets->execute();
+        if ($billets) {
+            return $billets->fetch($this->_db::FETCH_ASSOC);
+
+        } else {
+            return null;
+        }
 
     }
 

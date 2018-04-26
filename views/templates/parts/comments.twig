@@ -70,7 +70,7 @@
                     {% if item.approuved < 1 %}
 
                         {% if item.signalement < 1 %}
-                            <form method="post" action="/blog/chapitre/{{article.slug}}">
+                            <form class="form-signal" method="post" action="/blog/chapitre/{{article.slug}}">
                                 <input name='signalement' type="hidden" value="{{item.id}}">
                                 <button type="submit" class="btn btn-outline-danger btn-signalement">signaler</button>
                             </form>

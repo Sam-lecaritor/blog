@@ -250,8 +250,8 @@ class Articles_model
     public function countArticles()
     {
 
-        $test = $this->_db->query("SELECT COUNT(*) FROM articles");
-        return $test->fetchColumn();
+        $count = $this->_db->query("SELECT COUNT(*) FROM articles");
+        return $count->fetchColumn();
 
     }
 

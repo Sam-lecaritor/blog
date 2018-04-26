@@ -4,7 +4,7 @@
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'); */
 
 section>#footer {
-    position: absolute;
+    /* position: absolute; */
     padding-bottom: 30px;
     bottom: 0;
     height: 1.5em;
@@ -13,7 +13,7 @@ section>#footer {
 
 .footer-container {
     text-align: center;
-    width: 400px;
+    /* max-width: 400px; */
     margin-left: 30%
 }
 

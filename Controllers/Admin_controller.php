@@ -93,10 +93,22 @@ class Admin_controller
         $this->getPageEditeur('poster article', null, null, $count);
     }
 
+
+
     public function getAdmin()
     {
+        $articles=$this->article_model->countArticles();
+        $reported = $this->Comment_model->countAllReportedComments()[0];
+        $commentaires= $this->Comment_model->countTotalComments();
+        $max=$this->Comment_model->getMostComment()['id_chapitre'];
+
         echo $this->template->render('back/dashboard.twig', array(
             'page_title' => 'Administration',
+            'nombre_articles'=> $articles,
+            'reported'=>$reported,
+            'comments' =>$commentaires,
+            'article_most_comment'=> $max,
+
         ));
     }
 

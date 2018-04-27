@@ -165,7 +165,8 @@ h2,
 }
 
 td,
-.media-body>p {
+.media-body>p,
+.media-body>h5 {
     word-break: break-all;
 }
 

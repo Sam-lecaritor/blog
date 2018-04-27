@@ -13,6 +13,7 @@ namespace App;
  */
 
 use Models\Articles_model;
+use ReCaptcha\ReCaptcha;
 
 class Validateur
 {
@@ -27,6 +28,27 @@ class Validateur
     public function __construct()
     {
         $this->article_model = new Articles_model();
+    }
+
+    public function verifierCaptcha($datas)
+    {
+
+        $secret = "6LeO6lQUAAAAABUzVLF3-fvOROR02ctzFeKiyd5D";
+        $recaptcha = new ReCaptcha($secret);
+
+        if (isset($_POST['g-recaptcha-response'])) {
+
+            $gRecaptchaResponse = $_POST['g-recaptcha-response'];
+
+            $resp = $recaptcha->verify($gRecaptchaResponse);
+            if ($resp->isSuccess()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
 /**
@@ -216,6 +238,9 @@ class Validateur
 
     public function validerComment($post)
     {
+//g-recaptcha
+        //La valeur "g-recaptcha-response"
+        //6LeO6lQUAAAAABUzVLF3-fvOROR02ctzFeKiyd5D
 
         $datas = [];
         $datas['messages'] = [];
@@ -245,6 +270,12 @@ class Validateur
                 $datas['messages']['comment'] = "vous avez deja commenté ce billet.";
                 $datas['checked'] = false;
             }
+        }
+        $captcha = $this->verifierCaptcha($post);
+        if (!$captcha) {
+            $datas['messages']['captcha'] = 'le captcha doit etre vérifiéé';
+            $datas['checked'] = false;
+
         }
 
         return $datas;

@@ -13,6 +13,7 @@ use App\Db_connect;
  * @author   Charroux Sam <charrouxsam@gmail.com>
  * @license  MIT https: //choosealicense.com/licenses/mit/
  */
+
 class Articles_model
 {
 
@@ -37,21 +38,19 @@ class Articles_model
      * Recupere la liste de tout les articles et renvoie la totalité des données
      *
      * @param  null
-     * @return array(articles)
+     * @return array($articles)id, date_creation, title, text, id_chapitre, slug, published
      */
     public function getListeArticles()
     {
-
-        //eviter le select * pour eviter les bugs + bouffage de memoire
-
-        $billets = $this->_db->query('select * from articles');
+        $billets = $this->_db->query(
+            'SELECT id, date_creation, title, text, id_chapitre, slug, published
+            FROM articles');
 
         if ($billets) {
             return $billets->fetchall($this->_db::FETCH_ASSOC);
         } else {
             return null;
         }
-
     }
 
 /**
@@ -82,16 +81,20 @@ class Articles_model
         } else {
             return null;
         }
-
     }
 
+/**
+ * recupere une liste d'article selon l'index de la page
+ *
+ * @param string $index
+ * @return array articles [id, date_creation, title, text, id_chapitre, slug, published]
+ */
     public function getListePublishedArticlesLimit($index)
     {
-
         $index = ($index - 1) * $this->_articleParPages;
 
         $billets = $this->_db->prepare(
-            "SELECT id, date_creation, title, text, id_chapitre, slug, published 
+            "SELECT id, date_creation, title, text, id_chapitre, slug, published
             FROM articles
             WHERE published = 1
             ORDER BY id_chapitre
@@ -105,56 +108,48 @@ class Articles_model
         } else {
             return null;
         }
-
     }
-
 
 /**
  * recupere un article grace au slug de l'url
  *
- * @param [string] $slug
- * @return [array] id, date_creation, title, text, id_chapitre, slug, published
+ * @param string $slug
+ * @return array id, date_creation, title, text, id_chapitre, slug, published
  */
     public function getArticleBySlug($slug)
     {
-
         $slug = filter_var($slug, FILTER_SANITIZE_URL);
-
         $billet = $this->_db->prepare(
             'SELECT id, date_creation, title, text, id_chapitre, slug, published
-            FROM articles 
+            FROM articles
             WHERE slug=?');
 
         $billet->execute(array($slug));
-
         return $billet->fetch($this->_db::FETCH_ASSOC);
-
     }
 
 /**
  * recupere un article grace a son id_chapitre
  * renvoie la totalité des données de l'article
+ *
+ * @param int $id_chapitre
+ * @return array $datas  {id, date_creation, title, text, id_chapitre, slug, published}
  */
-
     public function getArticleById($idChapitre)
     {
-
         $billet = $this->_db->prepare(
-            'SELECT id, date_creation, title, text, id_chapitre, slug, published 
-            FROM articles 
+            'SELECT id, date_creation, title, text, id_chapitre, slug, published
+            FROM articles
             WHERE id_chapitre=?');
 
         $billet->execute(array($idChapitre));
-
         return $billet->fetch($this->_db::FETCH_ASSOC);
-
     }
-
 
 /**
  * Enregistrement nouvel article
  *
- * @param [array] $datas  {id, date_creation, title, text, id_chapitre, slug, published}
+ * @param array $datas  {id, date_creation, title, text, id_chapitre, slug, published}
  * @return bool
  */
     public function setArticle($datas)
@@ -184,13 +179,12 @@ class Articles_model
         $id_chapitre = $datas['id_chapitre'];
 
         return $billet->execute();
-
     }
 
 /**
  * mise a jour d'un article
  *
- * @param [array] $datas  {id, date_creation, title, text, id_chapitre, slug, published}
+ * @param array $datas  {id, date_creation, title, text, id_chapitre, slug, published}
  * @return bool
  */
     public function updateArticle($datas)
@@ -215,96 +209,92 @@ class Articles_model
         } else {
             $published = 0;
         }
-
         $title = $datas['title'];
         $text = $datas['text'];
         $slug = preg_replace('`[^a-z0-9]+`', '-', $datas['slug']);
         $slug = trim($slug, '-');
 
         return $billet->execute();
-
     }
 
     /**
      * suppression d'un article
      *
-     * @param [string] $slug
+     * @param string $slug
      * @return bool
      */
     public function DeletArticle($slug)
     {
-
         $billet = $this->_db->prepare(
             "DELETE FROM articles
             WHERE slug= :slug
             LIMIT 1");
 
         $billet->bindParam(':slug', $slug);
-
         return $billet->execute();
     }
 
     /**
      * Compter tout les articles
+     *
+     *  @return int
      */
     public function countArticles()
     {
-
         $count = $this->_db->query("SELECT COUNT(*) FROM articles");
         return $count->fetchColumn();
-
     }
 
-/**
- * compter tout les articles publiés
- */
+    /**
+     * compter tout les articles publiés
+     *
+     *  @return int
+     */
     public function countPublishedArticles()
     {
-
         $test = $this->_db->query(
             "SELECT COUNT(*)
             FROM articles
             WHERE published=true"
         );
         return $test->fetchColumn();
-
     }
 
     /**
      * compter le nombre de page d'articles publiés
+     *
+     *  @return int
      */
 
     public function countPagesPublishedArticles()
     {
-
         return ceil($this->countPublishedArticles() / $this->_articleParPages);
-
     }
 
     /**
      * compter le nombre de page d'articles publiés ou non
+     *
+     * @return int
      */
     public function countPagesArticles()
     {
-
         return ceil($this->countArticles() / $this->_articleParPages);
-
     }
 
+    /**
+     * retourne l'index le plus élevé pour les articles publiés
+     *
+     * @return string id_chapitre
+     */
     public function getIndexDernierChapitre()
     {
-
         $billet = $this->_db->prepare(
             'SELECT id_chapitre
                  From articles
                  ORDER BY id_chapitre DESC
                  LIMIT 1'
         );
-
         $billet->execute();
-
         return $billet->fetch($this->_db::FETCH_ASSOC);
-
     }
-
 }

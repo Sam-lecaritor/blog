@@ -3,6 +3,17 @@ namespace Routeurs;
 
 use Controllers\Admin_controller;
 
+/**
+ * Gestion des routes administrateur
+ *
+ * PHP version 7
+ *
+ * @category PHP
+ * @package  Null
+ * @author   Charroux Sam <charrouxsam@gmail.com>
+ * @license  MIT https: //choosealicense.com/licenses/mit/
+ */
+
 class Admin_router
 {
 

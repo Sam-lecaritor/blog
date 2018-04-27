@@ -50,18 +50,15 @@ class Admin_controller
 
     public function getArticlesList($params)
     {
-
+        //compter le nombre de pages d'articles
         $nbr_pages = $this->article_model->countPagesArticles();
 
         if (!isset($params[3]) || $params[3] < 1) {
-
             $articles = $this->article_model->getListeArticlesLimit(1);
             $params[3] = 1;
 
         } else {
-
             $articles = $this->article_model->getListeArticlesLimit(intval($params[3]));
-
         }
 
         foreach ($articles as $key => &$value) {
@@ -78,36 +75,40 @@ class Admin_controller
             'index_page' => intval($params[3]),
             'nbr_pages' => $nbr_pages,
         ));
-
     }
 
 /**
  * Creation d'un nouvel article
  * @param null
- * @return [int] index du prochain chapitre
+ * @return null rendu de la page  editeur
  */
     public function getEditeur()
     {
+        //recuperation de l'id_chapitre du dernier chapitre publié
         $count = $this->article_model->getIndexDernierChapitre();
         $count = intval($count['id_chapitre']) + 1;
         $this->getPageEditeur('poster article', null, null, $count);
     }
 
-
+/**
+ * Page d'accueil de l'administration
+ * @param null
+ * @return null rendu de la page dashboard
+ */
 
     public function getAdmin()
     {
-        $articles=$this->article_model->countArticles();
+        $articles = $this->article_model->countArticles();
         $reported = $this->Comment_model->countAllReportedComments()[0];
-        $commentaires= $this->Comment_model->countTotalComments();
-        $max=$this->Comment_model->getMostComment()['id_chapitre'];
+        $commentaires = $this->Comment_model->countTotalComments();
+        $max = $this->Comment_model->getMostComment()['id_chapitre'];
 
         echo $this->template->render('back/dashboard.twig', array(
             'page_title' => 'Administration',
-            'nombre_articles'=> $articles,
-            'reported'=>$reported,
-            'comments' =>$commentaires,
-            'article_most_comment'=> $max,
+            'nombre_articles' => $articles,
+            'reported' => $reported,
+            'comments' => $commentaires,
+            'article_most_comment' => $max,
 
         ));
     }
@@ -116,7 +117,7 @@ class Admin_controller
  * recupere un article grace au slug de l'url
  *
  * @param [array] id, date_creation, title, text, id_chapitre, slug, published
- * @return void
+ * @return void renvoie sur le dashboard en cas de succes, ou un message d'erreur en cas d'echec, ou sur la page editeur si rien a été posté
  */
 
     public function postArticle()
@@ -159,11 +160,12 @@ class Admin_controller
         $this->getPageEditeur('editer article', $article, null, $article['id_chapitre']);
     }
 
-    /**
-     * mise a jour des articles
-     *
-     *
-     */
+/**
+ * mise a jour des articles
+ *
+ * @param [string] url
+ * @return void renvoie sur la liste des articles en cas de succes, ou un message d'erreur en cas d'echec, ou sur la page editeur si rien a été posté
+ */
 
     public function updateArticle($params)
     {
@@ -195,24 +197,26 @@ class Admin_controller
  * suppression d'un article
  *
  * @param [string] $slug
- * @return redirection ou erreur
+ * @return void redirection ou erreur
  */
     public function DeletArticle($slug)
     {
         $req = $this->article_model->DeletArticle($slug);
 
         if ($req) {
-
             header('Location: /blog/admin/articles/list');
             exit();
-
         } else {
-
             echo "erreur dans la suppression de l'article";
         }
     }
 
-    public function getCommentspage($params = null)
+/**
+ * Page recapitulative des commentaires publiés par les utilisateurs
+ *
+ * @return array comptage des commentaires
+ */
+    public function getCommentspage()
     {
 
         $comments['reported'] = $this->Comment_model->countAllReportedComments()[0];
@@ -223,56 +227,43 @@ class Admin_controller
         echo $this->template->render('back/comments.twig', array(
             'page_title' => 'moderation commentaires',
             'comments' => $comments,
-
         ));
-
     }
+
+/**
+ * Page listant les commentaires publiés par les utilisateurs
+ *
+ * @param string url
+ * @return array  commentaires
+ */
 
     public function getCommentList($params)
     {
+        if (!isset($params[3]) || $params[3] < 1) {
+            $params[3] = 1;
+        }
+
+        if (isset($params['erreur'])) {
+            $erreur = $params['erreur'];
+        } else {
+            $erreur = null;
+        }
 
         if ($params[2] === 'reported') {
             $page = 'signalés';
             $nbr_pages = $this->Comment_model->countPagesReportedComments();
 
-            if (!isset($params[3]) || $params[3] < 1) {
-
-                $comments = $this->Comment_model->getReportedCommentsLimit(1);
-                $params[3] = 1;
-
-            } else {
-                $comments = $this->Comment_model->getReportedCommentsLimit(intval($params[3]));
-            }
+            $comments = $this->Comment_model->getReportedCommentsLimit(intval($params[3]));
 
         } elseif ($params[2] === 'news') {
-
             $page = 'non lus';
-
             $nbr_pages = $this->Comment_model->countPagesNewComments();
-
-            if (!isset($params[3]) || $params[3] < 1) {
-
-                $comments = $this->Comment_model->getNewCommentsLimit(1);
-                $params[3] = 1;
-
-            } else {
-                $comments = $this->Comment_model->getNewCommentsLimit(intval($params[3]));
-            }
+            $comments = $this->Comment_model->getNewCommentsLimit(intval($params[3]));
 
         } elseif ($params[2] === 'approuved') {
             $page = 'approuvés';
-
             $nbr_pages = $this->Comment_model->countPagescheckedComments();
-
-            if (!isset($params[3]) || $params[3] < 1) {
-
-                $comments = $this->Comment_model->getcheckedCommentsLimit(1);
-                $params[3] = 1;
-
-            } else {
-                $comments = $this->Comment_model->getcheckedCommentsLimit(intval($params[3]));
-            }
-
+            $comments = $this->Comment_model->getcheckedCommentsLimit(intval($params[3]));
         }
 
         echo $this->template->render('back/commentList.twig', array(
@@ -282,6 +273,7 @@ class Admin_controller
             'index_page' => intval($params[3]),
             'nbr_pages' => $nbr_pages,
             'link' => $params[2],
+            'erreur' => $erreur,
 
         ));
 
@@ -306,23 +298,38 @@ class Admin_controller
         ));
     }
 
+    /**
+     * Approuver un commentaire
+     *
+     * @param string url
+     * @return void redirection vers la page d'origine ou erreur en cas d'echec
+     *
+     */
+
     public function checkComment($params)
     {
-
         $req = $this->Comment_model->checkComment($params[3]);
 
         if ($req) {
             $url = '/blog/admin/comments/' . $params[4] . '/' . $params[5];
             header('Location: ' . $url);
             exit();
-
         } else {
+            $params[3] = $params[4];
+            $params[4] = $params[5];
+            $params['erreur'] = "impossible d'approuver ce commentaire";
 
-            //envoyer une erreur
+            $this->getCommentList($params);
         }
-
     }
 
+/**
+ * supprimer un commentaire
+ *
+ * @param string url
+ * @return void redirection vers la page d'origine ou erreur en cas d'echec
+ *
+ */
     public function deleteComment($params)
     {
         $req = $this->Comment_model->deleteComment($params[3]);
@@ -333,10 +340,11 @@ class Admin_controller
             exit();
 
         } else {
-
-            //envoyer une erreur
+            $params[3] = $params[4];
+            $params[4] = $params[5];
+            $params['erreur'] = "impossible de supprimer ce commentaire";
+            $this->getCommentList($params);
         }
-
     }
 
 /**

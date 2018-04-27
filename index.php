@@ -4,6 +4,8 @@ require 'app/bootstrap.php';
 
 
 if(isset($_GET['url'])){
+
+    $urlarray = filter_var($_GET['url'], FILTER_SANITIZE_ENCODED);
     $urlarray = explode('/', $_GET['url']);
 
 }else{

@@ -2,7 +2,7 @@
 namespace App;
 
 /**
- * Valide les entrée des formulaires utilisateurs
+ * Valide les entrée des formulaires
  *
  * PHP version 7
  *
@@ -30,18 +30,19 @@ class Validateur
     }
 
 /**
- * Nettoyage du slug
+ * Nettoyage du slug des articles a publier
  *
  * @param [string] $slug
- * @return [array] $datas
+ * @return [string] $slug
  */
     public function formatSlug($slug)
     {
         if (!isset($slug)) {
             $slug = '';
         } else {
-            $slug = preg_replace('`[^a-z0-9]+`', '-', $slug);
+
             $slug = trim($slug, '-');
+            $slug = preg_replace('`[^a-z0-9]+`', '-', $slug);
             $slug = filter_var($slug, FILTER_SANITIZE_ENCODED);
 
         }
@@ -205,6 +206,14 @@ class Validateur
 
     }
 
+/**
+ * verification de la validité des commentaire postés par un utilisateur
+ *
+ * @param [array] $post
+ * @param [string] $title
+ * @return [array] $datas
+ */
+
     public function validerComment($post)
     {
 
@@ -222,28 +231,23 @@ class Validateur
         $strlen_comment = strlen($datas['comment']);
 
         if ($strlen_pseudo < 3 || $strlen_pseudo > 30) {
-
             $datas['messages']['pseudo'] = "vous devez entrer un pseudo entre 3 et 30 caractères";
             $datas['checked'] = false;
-
         }
 
         if ($strlen_comment < 3 || $strlen_comment > 500) {
             $datas['messages']['comment'] = "vous devez entrer un texte entre 3 et 500 caractères";
             $datas['checked'] = false;
-
         }
+
         if (isset($_SESSION['comments'])) {
             if (in_array($datas['id_chapitre'], $_SESSION['comments'])) {
                 $datas['messages']['comment'] = "vous avez deja commenté ce billet.";
                 $datas['checked'] = false;
-
             }
-
         }
 
         return $datas;
     }
 
 }
-

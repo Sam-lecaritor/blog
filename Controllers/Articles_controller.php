@@ -1,4 +1,5 @@
 <?php
+namespace Controllers;
 
 /**
  * Controlleur utilisteurs blog ecrivain
@@ -10,8 +11,6 @@
  * @author   Charroux Sam <charrouxsam@gmail.com>
  * @license  MIT https: //choosealicense.com/licenses/mit/
  */
-
-namespace Controllers;
 
 use App\Validateur;
 use Models\Articles_model;
@@ -45,9 +44,7 @@ class Articles_controller
  * Envoie sur la page listant les articles publiés
  *
  * @param string slug de l'article
- * @return mixed (array) articles{ int: [id], datetime: [date_creation], string: [title], html-string: [text], string: [id_chapitre], string:[slug], bool, [published], comments{int: [count]}
- *
- *
+ * @return array articles{ int: [id], datetime: [date_creation], string: [title], html-string: [text], string: [id_chapitre], string:[slug], bool, [published], comments{int: [count]}
  *
  */
     public function afficherListeArticles($title, $url = null)
@@ -82,32 +79,30 @@ class Articles_controller
  * Envoie sur la page single article
  *
  * @param string slug de l'article
- * @return mixed (array) articles{ int: [id], datetime: [date_creation], string: [title], html-string: [text], string: [id_chapitre], string:[slug], bool, [published]}
+ * @return array articles{ int: [id], datetime: [date_creation], string: [title], html-string: [text], string: [id_chapitre], string:[slug], bool, [published]}
  * (array) comments{int: [id], string: [pseudo], date-time: [date_creation], bool: [approuved], bool: [signalement], string: [id_chapitre]}
  * (array)messages{string}
  *
  */
     public function afficherArticle($slug)
     {
-
         $article = $this->article_model->getArticleBySlug($slug);
-        if ($article) {
+        if ($article
+            && ($article['published'] === '1'
+                || (isset($_SESSION['isADMIN']) && $_SESSION['isADMIN'] === 'isadmin'))) {
 
             $comments = $this->Comment_model->getCommentsById_chapitre($article['id_chapitre']);
-
             $message = [];
 
             if (isset($_POST) && isset($_POST['signalement'])) {
                 $this->Comment_model->signalerComment($_POST['signalement']);
                 $comments = $this->Comment_model->getCommentsById_chapitre($article['id_chapitre']);
-
             }
 
             if (isset($_POST) && (isset($_POST['pseudo']) && isset($_POST['comment']) && isset($_POST['id_chapitre']))) {
                 $comment['pseudo'] = $_POST['pseudo'];
                 $comment['comment'] = $_POST['comment'];
                 $comment['id_chapitre'] = $_POST['id_chapitre'];
-
                 $comment = $this->validateur->validerComment($comment);
 
                 if ($comment['checked'] === true) {
@@ -120,14 +115,13 @@ class Articles_controller
 
                     } else {
                         $message[0] = "une erreur est survenue pendant l'enregistrement du commentaire";
-
                     }
 
                 } else {
                     $message = $comment['messages'];
                 }
-
             }
+
             if ($article["published"] === "0"
                 && (
                     !isset($_SESSION['isADMIN'])
@@ -144,9 +138,7 @@ class Articles_controller
                     'comments' => $comments,
                     'nbr_comments' => count($comments),
                 ));
-
             }
-
         } else {
             $this->getPage404();
         }

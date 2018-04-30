@@ -21,7 +21,7 @@
             <div class="card my-4 comments-form">
                 <h5 class="card-header">Laisser un commentaire:</h5>
                 <div class="card-body">
-                    <form action="/blog/chapitre/{{article.slug}}" method="post">
+                    <form action="{{ constant('ROOT') }}/chapitre/{{article.slug}}" method="post">
                         <div class="form-group">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
@@ -66,13 +66,13 @@
         {% for item in comments %}
 
             <hr>
-            <div class="media">
+            {# <div class="media"> #}
                 <div class="media mb-4">
 
                     {% if item.approuved < 1 %}
 
                         {% if item.signalement < 1 %}
-                            <form class="form-signal" method="post" action="/blog/chapitre/{{article.slug}}">
+                            <form class="form-signal" method="post" action="{{ constant('ROOT') }}/chapitre/{{article.slug}}">
                                 <input name='signalement' type="hidden" value="{{item.id}}">
                                 <button type="submit" class="btn btn-outline-danger btn-signalement">signaler</button>
                             </form>
@@ -102,7 +102,7 @@
 
                     </div>
                 </div>
-            </div>
+            {# </div> #}
 
         {% endfor %}
 

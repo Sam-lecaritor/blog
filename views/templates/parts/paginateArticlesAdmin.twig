@@ -6,18 +6,18 @@
 
         {% if index_page > 1  %}
 
-            <li class="page-item"><a class="page-link" href="/blog/admin/articles/list/{{index_page - 1}}">Précédents</a></li>
+            <li class="page-item"><a class="page-link" href="{{ constant('ROOT') }}/admin/articles/list/{{index_page - 1}}">Précédents</a></li>
         {% endif %}
 
         {% for i in range(1, nbr_pages) %}
             <li class="page-item">
-            <a class="page-link" href="/blog/admin/articles/list/{{ i }}">{{ i }}</a>
+<a class="page-link {{ (i == index_page) ? 'paginate-active' : ''}}" href="{{ constant('ROOT') }}/admin/articles/list/{{ i }}">{{ i }}</a>
             </li>
         {% endfor %}
 
         {% if index_page <= nbr_pages -1 %}
 
-            <li class="page-item"><a class="page-link" href="/blog/admin/articles/list/{{index_page + 1}}">Suivant</a></li>
+            <li class="page-item"><a class="page-link" href="{{ constant('ROOT') }}/admin/articles/list/{{index_page + 1}}">Suivant</a></li>
         {% endif %}
 
     </ul>

@@ -5,6 +5,7 @@ session_start();
 
 //autoloading de composer
 require 'vendor/autoload.php';
+require 'config/env.php';
 
 //decalartion du moteur de template twig
 //passer le cache a true en prod en supprimant cette ligne de l'array

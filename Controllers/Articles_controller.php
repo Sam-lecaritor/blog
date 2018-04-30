@@ -72,6 +72,7 @@ class Articles_controller
             'articles' => $listeArticles,
             'index_page' => intval($url[1]),
             'nbr_pages' => $nbr_pages,
+            'page_name' => 'articles',
         ));
     }
 
@@ -90,6 +91,10 @@ class Articles_controller
         if ($article
             && ($article['published'] === '1'
                 || (isset($_SESSION['isADMIN']) && $_SESSION['isADMIN'] === 'isadmin'))) {
+
+            $previous = $this->article_model->getPreviousArticle($article['id_chapitre']);
+
+            $next = $this->article_model->getNextArticle($article['id_chapitre']);
 
             $comments = $this->Comment_model->getCommentsById_chapitre($article['id_chapitre']);
             $message = [];
@@ -134,6 +139,8 @@ class Articles_controller
                     'page_title' => $article["slug"],
                     'moteur_name' => 'Twig',
                     'article' => $article,
+                    'previous' => $previous['slug'],
+                    'next' => $next['slug'],
                     'message' => $message,
                     'comments' => $comments,
                     'nbr_comments' => count($comments),
@@ -154,6 +161,7 @@ class Articles_controller
         echo $this->template->render('index.twig',
             array(
                 'page_title' => 'blog forteroche',
+                'page_name' => 'home',
             ));
     }
 

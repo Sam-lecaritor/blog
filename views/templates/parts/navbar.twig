@@ -7,14 +7,14 @@
 
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="/blog/Home">Accueil</a>
+            <li class="nav-item  {{(page_name == 'home')? 'paginate-active' : ''}} ">
+                <a class="nav-link" href="{{ constant('ROOT') }}/Home">Accueil</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/blog/chapitres">Chapitres</a>
+            <li class="nav-item {{(page_name == 'articles')? 'paginate-active' : ''}}">
+                <a class="nav-link" href="{{ constant('ROOT') }}/chapitres">Chapitres</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/blog/admin">Admin</a>
+            <li class="nav-item  {{(page_name == 'admin')? 'paginate-active' : ''}}">
+                <a class="nav-link" href="{{ constant('ROOT') }}/admin">Admin</a>
             </li>
             {#       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

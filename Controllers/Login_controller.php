@@ -11,6 +11,7 @@ namespace Controllers;
  * @author   Charroux Sam <charrouxsam@gmail.com>
  * @license  MIT https: //choosealicense.com/licenses/mit/
  */
+use App\Validateur;
 
 require 'config/mdp.php';
 
@@ -18,10 +19,11 @@ class Login_controller
 {
 
     private $template;
+    private $validateur;
 
     /**
      * constructeur
-     * 
+     *
      * @param object $twig gestionnaire de template
      * @return object Login_controller
      */
@@ -29,13 +31,14 @@ class Login_controller
     public function __construct($twig)
     {
         $this->template = $twig;
-    }
+        $this->validateur = new Validateur();
 
+    }
 
     /**
      * redirection vers le formulaire de login admin
      *
-     * @return void 
+     * @return void
      */
 
     public function redirAdminLogin()
@@ -60,11 +63,13 @@ class Login_controller
             $post['user'] = filter_var($post['user'], FILTER_SANITIZE_STRING);
             $post['mdp'] = filter_var($post['mdp'], FILTER_SANITIZE_STRING);
 
-            if ($post['user'] === ADMIN_NAME && password_verify($post['mdp'], ADMIN_MDP)) {
+            if ($post['user'] === ADMIN_NAME
+                && password_verify($post['mdp'], ADMIN_MDP)
+                && $this->validateur->verifierCaptcha($post)) {
 
                 $_SESSION['isADMIN'] = 'isadmin';
 
-                header('location: /blog/admin');
+                header('location: ' . ROOT . '/admin');
 
             } else {
                 $this->redirAdminLogin();

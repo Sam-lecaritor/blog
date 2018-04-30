@@ -89,7 +89,7 @@ class Articles_model
  * @param string $index
  * @return array articles [id, date_creation, title, text, id_chapitre, slug, published]
  */
-    public function getListePublishedArticlesLimit($index)
+    public function getListePublishedArticlesLimit(int $index)
     {
         $index = ($index - 1) * $this->_articleParPages;
 
@@ -145,7 +145,47 @@ class Articles_model
         $billet->execute(array($idChapitre));
         return $billet->fetch($this->_db::FETCH_ASSOC);
     }
+/**
+ * Renvoie l'article précédent celui affiché
+ *
+ * @param [string] $idChapitre
+ * @return [string] $slug
+ */
+    public function getPreviousArticle($idChapitre)
+    {
+        $billet = $this->_db->prepare(
+            'SELECT  slug
+            FROM articles
+            WHERE id_chapitre < ?
+            AND published = 1
+            ORDER BY id_chapitre DESC
+            LIMIT 1');
 
+        $billet->execute(array($idChapitre));
+        return $billet->fetch($this->_db::FETCH_ASSOC);
+
+    }
+/**
+ * Renvoie l'article suivant celui affiché
+ *
+ * @param [string] $idChapitre
+ * @return [string] $slug
+ */
+
+    public function getNextArticle($idChapitre)
+    {
+        $billet = $this->_db->prepare(
+            'SELECT  slug
+            FROM articles
+            WHERE id_chapitre > ?
+            AND published = 1
+            ORDER BY id_chapitre ASC
+            LIMIT 1');
+
+        $billet->execute(array($idChapitre));
+        return $billet->fetch($this->_db::FETCH_ASSOC);
+
+    }
 /**
  * Enregistrement nouvel article
  *

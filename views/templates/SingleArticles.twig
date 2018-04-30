@@ -4,20 +4,37 @@
 
 <div class="container article">
 
-
-
     <h1 class="text-center titre-single">
         {{ article.title|raw }}
     </h1>
 
-    {{ article.text|raw }}
+    <div class="single-article">
+        {{ article.text|raw }}
+    </div>
+
+    <div class="previous-next">
+        {% if previous %}
+
+            <a class="previous-link" href="{{ constant('ROOT') }}/chapitre/{{previous}}">
+                <i class="fa fa-angle-double-left"></i>
+                Précédents</a>
+
+        {% endif %}
+
+        {% if next %}
+
+            <a class="next-link" href="{{ constant('ROOT') }}/chapitre/{{next}}">suivant
+                <i class="fa fa-angle-double-right"></i>
+            </a>
+
+        {% endif %}
+
+    </div>
 
 </div>
 
 <hr><hr>
 
-
-</div>
 {% include 'parts/comments.twig' %}
- {% include 'parts/footer.twig' %} 
+{% include 'parts/footer.twig' %}
 {% include 'parts/endScript.twig' %}

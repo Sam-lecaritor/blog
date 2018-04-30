@@ -61,32 +61,7 @@
                     </td>
 
                 </tr>
-                {# fin tableau #}
 
-                {#             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>
-                    <div class="row container">
-                        <div class="col-md-6">
-                            <button class="btn btn-sm btn-success" onclick="Confirmation( '{{item.slug}}', '{{item.title}}' )">
-                                Approuver
-                            </button>
-                        </div>
-                        <div class="col-md-6">
-
-                            <button class="btn btn-sm btn-danger" onclick="Confirmation( '{{item.slug}}', '{{item.title}}' )">
-                                Supprimer
-                            </button>
-
-                        </div>
-                    </div>
-                </td>
-
-            </tr> #}
-                {# fin tableau #}
             {% endfor %}
         </tbody>
     </table>
@@ -96,7 +71,7 @@
 {# fermeture du contenu a supprimer si le footer est ajouté #}
 </div>
 
-<script src="/blog/includes/js/confirm.js"></script>
+<script src="{{ constant('ROOT') }}/includes/js/confirm.js"></script>
 {% include 'parts/paginationCommentsAdmin.twig' %}
 {% include 'parts/sidenavfin.twig' %}
 {# {% include 'parts/footer.twig' %} #}

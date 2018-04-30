@@ -4,7 +4,7 @@
 
 <div class="container-fluid text-right">
 
-    <a href="/blog/admin/articles/ajouter" class="btn btn-lg btn-warning">ajouter un article</a>
+    <a href="{{ constant('ROOT') }}/admin/articles/ajouter" class="btn btn-lg btn-warning">ajouter un article</a>
 </div>
 
 <div class="row container-fluid padding-left padding-top ">
@@ -15,7 +15,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <a href="/blog/chapitre/{{ item.slug }}">
+                    <a href="{{ constant('ROOT') }}/chapitre/{{ item.slug }}">
 
                         <h5 class="card-title">
                             {{ item.title }}</h5>
@@ -55,7 +55,7 @@
                         </div>
                         <hr>
                         <div class="col-md-6 col-md-offset-1 ">
-                            <a href="/blog/admin/article/{{item.slug}}/edit" class="btn btn-sm btn-success" role="button">éditer</a>
+                            <a href="{{ constant('ROOT') }}/admin/article/{{item.slug}}/edit" class="btn btn-sm btn-success" role="button">éditer</a>
                         </div>
                         <div class="col-md-6">
 
@@ -75,7 +75,7 @@
 <br>
 {# fermeture du contenu a supprimer si le footer est ajouté #}
 </div>
-<script src="/blog/includes/js/confirm.js"></script>
+<script src="{{ constant('ROOT') }}/includes/js/confirm.js"></script>
 
 {% include 'parts/paginateArticlesAdmin.twig' %}
 {# {% include 'parts/footer.twig' %} #}

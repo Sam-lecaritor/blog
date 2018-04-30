@@ -23,6 +23,7 @@ class Admin_controller
     private $article_model;
     private $Comment_model;
     private $validateur;
+    private $page_name = 'admin';
 
 /**
  * Constructeur
@@ -74,6 +75,7 @@ class Admin_controller
             'page_title' => 'liste des articles',
             'index_page' => intval($params[3]),
             'nbr_pages' => $nbr_pages,
+            'page_name' => $this->page_name
         ));
     }
 
@@ -109,6 +111,7 @@ class Admin_controller
             'reported' => $reported,
             'comments' => $commentaires,
             'article_most_comment' => $max,
+            'page_name' => $this->page_name
 
         ));
     }
@@ -130,7 +133,7 @@ class Admin_controller
 
                 if (isset($req) && $req != false) {
                     //post reussi, enregistrement effectué
-                    header('Location: /blog/admin');
+                    header('Location: '.ROOT.'/admin');
                     exit();
                 } else {
                     //post envoyé, enregistrement failed
@@ -176,7 +179,7 @@ class Admin_controller
                 if ($validateur['checked'] === true) {
                     $req = $this->article_model->updateArticle($_POST);
                     if (isset($req) && $req != false) {
-                        header('Location: /blog/admin/articles/list/');
+                        header('Location: '.ROOT.'/admin/articles/list/');
                         exit();
 
                     } else {
@@ -204,7 +207,7 @@ class Admin_controller
         $req = $this->article_model->DeletArticle($slug);
 
         if ($req) {
-            header('Location: /blog/admin/articles/list');
+            header('Location: '.ROOT.'/admin/articles/list');
             exit();
         } else {
             echo "erreur dans la suppression de l'article";
@@ -227,6 +230,7 @@ class Admin_controller
         echo $this->template->render('back/comments.twig', array(
             'page_title' => 'moderation commentaires',
             'comments' => $comments,
+            'page_name' => $this->page_name
         ));
     }
 
@@ -274,6 +278,7 @@ class Admin_controller
             'nbr_pages' => $nbr_pages,
             'link' => $params[2],
             'erreur' => $erreur,
+            'page_name' => $this->page_name
 
         ));
 
@@ -295,6 +300,7 @@ class Admin_controller
             'page_title' => $page_title,
             'article' => $article,
             'index_chapitre' => $index_chapitre,
+            'page_name' => $this->page_name
         ));
     }
 
@@ -311,7 +317,7 @@ class Admin_controller
         $req = $this->Comment_model->checkComment($params[3]);
 
         if ($req) {
-            $url = '/blog/admin/comments/' . $params[4] . '/' . $params[5];
+            $url = ''.ROOT.'/admin/comments/' . $params[4] . '/' . $params[5];
             header('Location: ' . $url);
             exit();
         } else {
@@ -335,7 +341,7 @@ class Admin_controller
         $req = $this->Comment_model->deleteComment($params[3]);
 
         if ($req) {
-            $url = '/blog/admin/comments/' . $params[4] . '/' . $params[5];
+            $url = ''.ROOT.'/admin/comments/' . $params[4] . '/' . $params[5];
             header('Location: ' . $url);
             exit();
 

@@ -1,21 +1,25 @@
 {% include 'parts/header.twig' %}
 {% include 'parts/navbar.twig' %}
 
-
 <div class="container loginform">
-<h1>Identification</h1>
+    <h1>Identification</h1>
     <div class="padding-top">
         <form action="" method="post">
-        <div class="form-group">
-            <label for="exampleInputEmail1">Nom d'utilisateur</label>
-            <input name="user" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Mot de passe</label>
-            <input name="mdp" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Nom d'utilisateur</label>
+                <input name="user" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="UserName">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Mot de passe</label>
+                <input name="mdp" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <div class="form-group">
+                {# google captcha #}
+                <div class="form-group g-recaptcha" data-sitekey="6LeO6lQUAAAAANVgH2ym0I__euOUj1ac9aK8f9Jm"></div>
+                {# google captcha #}
+            </div>
 
-        <button type="submit" class="btn btn-primary">Valider</button>
+            <button type="submit" class="btn btn-primary">Valider</button>
         </form>
     </div>
 </div>

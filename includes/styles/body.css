@@ -1,13 +1,47 @@
 body {
     /* position: absolute; */
     background-color: rgba(161, 158, 158, 0.158);
-    min-height: 900px;
-    
+    /* min-height: 900px; */
     /* min-width: 100%; */
 }
+
 /* .blog-content{
 padding-bottom: 60px;
 } */
+
+h1,
+h2,
+.img {
+    padding: 20px;
+}
+
+img {
+    padding-bottom: 50px;
+}
+
+form {
+    padding-bottom: 50px;
+}
+
+.navbar {
+    /*  z-index: 1000; */
+    /* margin-bottom: 150px; */
+    background: rgb(2, 141, 196) !important;
+    color: white;
+}
+
+.nav-link {
+    color: white !important;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: rgb(65, 64, 64) !important;
+    font-weight: 800;
+    /* font-size: 1.1em; */
+    background-color: rgba(35, 183, 241, 0.137);
+    border-radius: 5px;
+}
 
 #wrapper,
 .article,
@@ -17,7 +51,8 @@ padding-bottom: 60px;
 }
 
 .blog-content {
-    min-height: 900px;
+    min-height: 400px;
+    margin-bottom: 350px;
 }
 
 .error>h1 {
@@ -34,17 +69,17 @@ padding-bottom: 60px;
     margin-bottom: 30px;
     min-width: 350px;
     max-width: 350px;
-    min-height: 250px;
-}
-
-h1,
-h2,
-.img {
-    padding: 20px;
+    min-height: 300px;
+    box-shadow: 8px 8px 2px 1px rgba(8, 113, 250, 0.082);
 }
 
 .pagination {
+    padding-top: 60px;
     padding-left: 16px;
+}
+
+.paginate-active {
+    background-color: rgba(0, 0, 0, 0.11);
 }
 
 .padding-top {
@@ -63,6 +98,50 @@ h2,
     padding: 50px;
     text-decoration: underline;
     text-shadow: 4px 6px #3a3a3a2c;
+}
+
+.single-article {
+    background-color: white;
+    border: solid;
+    border-width: .5px;
+    border-color: rgba(8, 113, 250, 0.178);
+    max-width: 90%;
+    padding: 25px;
+    margin: auto;
+    border-radius: 4px;
+}
+
+.previous-next {
+    width: 90%;
+    margin: auto;
+    margin-top: 25px;
+}
+
+.previous-link {
+    display: inline-block;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 5%;
+    margin-right: 60%;
+    text-align: left;
+    padding: 8px;
+    border: solid;
+    border-width: .5px;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.next-link {
+    display: inline-block;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 5%;
+    text-align: right;
+    padding: 8px;
+    border: solid;
+    border-width: .5px;
+    border-radius: 4px;
+    background-color: white;
 }
 
 .loginform {
@@ -110,11 +189,11 @@ h2,
 .list-comments {
     max-width: 75%;
     border-style: solid;
-    border-width: 2px;
+    border-width: 1px;
     margin-top: 80px;
-    margin-left: 30px;
-    border-radius: 6px;
-    background-color: rgba(8, 113, 250, 0.041);
+    margin-left: 40px;
+    border-radius: 2px;
+    background-color: white;
     padding: 50px;
 }
 
@@ -149,6 +228,11 @@ h2,
     margin-top: 150px;
 }
 
+.media {
+    width: 100%;
+    height: 100%;
+}
+
 .media-body>H5 {
     color: black;
     font-size: .9em;
@@ -173,58 +257,60 @@ td,
 .btn-table {
     margin: 4px;
 }
-.navbar-toggler{
+
+.navbar-toggler {
     background-color: rgba(255, 255, 255, 0.959);
 }
 
-/* debut des media queries */
-
-
 .footer {
-    position: relative;
+    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color:  rgb(2, 141, 196) !important;
+    background-color: rgb(2, 141, 196) !important;
     color: white;
     text-align: center;
     margin-top: 60px;
 }
 
-.list-inline-item >a >i {
+.list-inline-item>a>i {
     color: white;
     font-size: 1.5em;
 }
+
 .list-inline-item>a>i:hover {
     color: rgba(255, 255, 255, 0.781);
-     font-size: 1.8em;
-     margin-top: -10px;
+    font-size: 1.8em;
+    margin-top: -10px;
 }
 
-.margin-bottom{
+.margin-bottom {
     margin-bottom: 60px;
+}
+
+/* debut des media queries */
+
+@media screen and (max-width: 990px) {
+    .previous-link {
+        margin-left: 5%;
+        margin-right: 45%;
+    }
 }
 
 @media screen and (max-width: 768px) {
     .td-infos {
         display: none;
     }
-
- .mb-4{
-     display: inline;
- }
- .form-signal,
- .btn-signalement {
-     padding: 10px;
-     margin: 10px;
- }
-
-.img-couverture{
-    max-width: 300px;
-    height: auto;
-}
-
-
-
-
+    .mb-4 {
+        display: inline;
+    }
+    .form-signal,
+    .btn-signalement {
+        padding: 10px;
+        margin: 10px;
+    }
+    .img-couverture {
+        max-width: 300px;
+        height: auto;
+    }
 }

@@ -65,7 +65,7 @@ form {
 }
 
 .card {
-    margin: 10px;
+    margin: 30px;
     margin-bottom: 30px;
     min-width: 350px;
     max-width: 350px;
@@ -270,7 +270,7 @@ td,
     background-color: rgb(2, 141, 196) !important;
     color: white;
     text-align: center;
-    margin-top: 60px;
+    margin-top: 20px;
 }
 
 .list-inline-item>a>i {
@@ -286,6 +286,12 @@ td,
 
 .margin-bottom {
     margin-bottom: 60px;
+}
+.padding-bottom-sm{
+    padding-bottom:20px;
+}
+.margin-right{
+    margin-right: 20px;
 }
 
 /* debut des media queries */

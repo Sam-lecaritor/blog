@@ -106,11 +106,6 @@ class Admin_router
 
                     break;
 
-                case 'view':
-                    $this->Admin_controller->articlePreview($params);
-
-                    break;
-
                 case 'delete':
 
                     $this->Admin_controller->DeletArticle($params[2]);

@@ -155,6 +155,7 @@ form {
     background-color: rgba(8, 113, 250, 0.514);
 }
 
+
 .loginform>h1 {
     padding: 0;
     text-align: center;
@@ -287,10 +288,12 @@ td,
 .margin-bottom {
     margin-bottom: 60px;
 }
-.padding-bottom-sm{
-    padding-bottom:20px;
+
+.padding-bottom-sm {
+    padding-bottom: 20px;
 }
-.margin-right{
+
+.margin-right {
     margin-right: 20px;
 }
 
@@ -318,5 +321,25 @@ td,
     .img-couverture {
         max-width: 300px;
         height: auto;
+    }
+    .card {
+        margin: 5px;
+        min-width: 300px;
+        max-width: 300px;
+    }
+
+    .loginform {
+        width: 80%;
+        min-width: 350px;
+        margin-left: 5px;
+    }
+}
+
+@media screen and (max-width: 340px) {
+ 
+    .card {
+        margin: 5px;
+        min-width: 200px;
+        max-width: 200px;
     }
 }

@@ -37,7 +37,7 @@ class Users_router
             /**page de la liste des articles coté utilisateurs */
             case 'chapitres':
 
-                $this->Articles_controller->afficherListeArticles('Chapitres', $params);
+                $this->Articles_controller->afficherListeArticles( $params);
                 break;
             /** page single article */
             case 'chapitre':

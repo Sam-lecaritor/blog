@@ -224,8 +224,8 @@ class Admin_controller
 
         $comments['reported'] = $this->Comment_model->countAllReportedComments()[0];
         $comments['checked'] = $this->Comment_model->countAllcheckedComments()[0];
-
         $comments['news'] = $this->Comment_model->countAllNewComments()[0];
+
 
         echo $this->template->render('back/comments.twig', array(
             'page_title' => 'moderation commentaires',
@@ -256,7 +256,6 @@ class Admin_controller
         if ($params[2] === 'reported') {
             $page = 'signalés';
             $nbr_pages = $this->Comment_model->countPagesReportedComments();
-
             $comments = $this->Comment_model->getReportedCommentsLimit(intval($params[3]));
 
         } elseif ($params[2] === 'news') {
@@ -365,4 +364,19 @@ class Admin_controller
         ));
     }
 
+/**
+ * Deconnecter l'admin
+ * @param null
+ * @return void
+ */
+
+    public function DecoAdmin(){
+
+    if(isset($_SESSION['isADMIN'])){
+        $_SESSION['isADMIN'] = NULL;
+    }
+        header('location: ' . ROOT . '/admin');
+        exit();
+    }
 }
+

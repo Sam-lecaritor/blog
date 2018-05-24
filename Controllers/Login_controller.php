@@ -70,6 +70,7 @@ class Login_controller
                 $_SESSION['isADMIN'] = 'isadmin';
 
                 header('location: ' . ROOT . '/admin');
+                exit();
 
             } else {
                 $this->redirAdminLogin();

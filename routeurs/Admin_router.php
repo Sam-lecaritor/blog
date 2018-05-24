@@ -117,7 +117,11 @@ class Admin_router
 
             }
 
-        } else {
+        }elseif (isset($params[1]) && $params[1] === 'exit' ){
+
+            $this->Admin_controller->DecoAdmin();
+        }
+         else {
             $this->Admin_controller->getPage404();
         }
 

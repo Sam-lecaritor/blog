@@ -47,20 +47,21 @@ class Articles_controller
  * @return array articles{ int: [id], datetime: [date_creation], string: [title], html-string: [text], string: [id_chapitre], string:[slug], bool, [published], comments{int: [count]}
  *
  */
-    public function afficherListeArticles($title, $url = null)
+    public function afficherListeArticles($url = null)
     {
 
         $nbr_pages = $this->article_model->countPagesPublishedArticles();
 
         if (!isset($url[1]) || $url[1] < 1) {
 
-            $listeArticles = $this->article_model->getListePublishedArticlesLimit(1);
             $url[1] = 1;
-
+            $listeArticles = $this->article_model->getListePublishedArticlesLimit(1);
+            
         } elseif (isset($url[1])) {
 
             $listeArticles = $this->article_model->getListePublishedArticlesLimit($url[1]);
         }
+
         foreach ($listeArticles as $key => &$value) {
 
             $count = $this->Comment_model->countAllComments($value['id_chapitre']);
@@ -68,7 +69,7 @@ class Articles_controller
         }
 
         echo $this->template->render('articles.twig', array(
-            'page_title' => $title,
+            'page_title' => 'Chapitres',
             'articles' => $listeArticles,
             'index_page' => intval($url[1]),
             'nbr_pages' => $nbr_pages,
